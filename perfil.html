@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Perfil</title>
+</head>
+<body>
+    <h1>Perfil del jugador <span id="jugador"></span></h1>
+
+    <form>
+        <label for="nombre">Nombre: </label><input type="nombre"><br />
+        <label for="apodo">Apodo: </label><input type="apodo"><br />
+        <label for="color">Color: </label><input id="color" type="color"><br/>
+        <label for="foto">Foto: </label><img id="foto" src="img/person.png" alt="foto" onclick="sacarFoto()"> <br>
+        <button id="btn-guardar-perfil">Guardar</button>
+    </form>
+    
+    <script src="js/lib.js"></script>
+    <script src="js/perfil.js"></script>
+</body>
+</html>
