@@ -1,13 +1,17 @@
-// Wait for the deviceready event before using any of Cordova's device APIs.
-// See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
-document.addEventListener('deviceready', listo, false);
-
 let juego = {
     tabla : [["&nbsp;", "&nbsp;", "&nbsp;"], ["&nbsp;", "&nbsp;", "&nbsp;"], ["&nbsp;", "&nbsp;", "&nbsp;"]], // fichas en el tablero
     jugadas : 0, // las jugadas que se hicieron hasta el momento
     turnos : tirarMoneda(),
     ganador : 0
 };
+
+// Inicializar cuando se carga la página
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Ta-Te-Ti iniciado');
+    empezarJuego();
+    hacerTabla();
+});
+
 document.getElementById("turnos").innerHTML = juego.turnos;
 
 function empezarJuego() {
@@ -97,12 +101,4 @@ function terminado(){
     }
     document.querySelector("#juego-terminado .mensaje").innerHTML = msg;
     document.getElementById("juego-terminado").classList.remove("nodisp");
-}
-
-function listo() {
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-
-    empezarJuego();
-
-    hacerTabla();
 }

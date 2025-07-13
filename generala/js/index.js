@@ -1,201 +1,364 @@
-const juego = {
-    dados: [],
-    seleccionados: [],
-    cantJugadores: 2,
-    turno: 0,
-    puntos: {
-        "1": [], //Acá hay un array de acuerdo a juego.jugadores
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "E": [],
-        "F": [],
-        "P": [],
-        "G": [],
-        "D": [],
-        "T": [],
+// Variables del juego
+let dados = [1, 1, 1, 1, 1];
+let dadosBloqueados = [false, false, false, false, false];
+let tiroActual = 1;
+let jugadorActual = 0;
+let puntuaciones = {
+    p1: {
+        as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
+        poker: null, full: null, escalera: null, generala: null,
+        subtotal: 0, bonus: 0, total: 0
     },
-    dadosTamaño: 150
-}; // juego.puntos["3"][1] es la forma de acceder a las propiedades de los objetos, el subindice no es el número si no que es el string con el número de la propiedad, se le llama diccionario
-
-const cuarto = juego.dadosTamaño * 0.25;
-const mitad = juego.dadosTamaño * 0.5;
-const trescuartos = juego.dadosTamaño * 0.75;
-const radio = juego.dadosTamaño * 0.1;
-
-document.addEventListener('deviceready', onDeviceReady, false);
-
-function iniciarPuntaje() {
-    const puntaje = [];
-    for(let i = 0; i < juego.cantJugadores; i++){
-        puntaje.push(0);
+    p2: {
+        as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
+        poker: null, full: null, escalera: null, generala: null,
+        subtotal: 0, bonus: 0, total: 0
     }
-    return puntaje;
-}
-
-function numAlAzar(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function mostrarDados() {
-    const cont = document.getElementById("dados");
-    cont.innerHTML = null;
-    for (let i = 0; i < 5; i++){
-      cont.appendChild(mostrarDado(i, juego.dados[i]));
-    }
-}
-
-const mostrarDado = (i, numero) => {
-
-    let dado = document.createElement("canvas");
-
-    dado.classList.add ("dado");
-
-    dado.setAttribute("width", "" + juego.dadosTamaño);
-
-    dado.setAttribute("height", "" + juego.dadosTamaño);
-
-    dado.style.borderRadius = (juego.dadosTamaño / 100) + "em";
-
-    dado.style.margin = (juego.dadosTamaño / 200) + "em";
-
-    dibujarDado(dado, numero);
-
-    //dado.onclick = () => {seleccionar(dado);}
-
-    return dado;
 };
 
-function dibujarDado(cont, numero) {
-    let ctx = cont.getContext("2d");
+// Inicializar el juego
+document.addEventListener('DOMContentLoaded', function() {
+    cargarPerfiles();
+    inicializarJuego();
+});
 
-    ctx.clearReact(0, 0, juego.dadosTamaño, juego.dadosTamaño);
-
-    ctx.beginPath();
-    ctx.rect(0, 0, juego.dadosTamaño, juego.dadosTamaño);
-    ctx.fillStyle = "#FFFFFF";
-    ctx.closePath();
-
-    //borro
-
-     ctx.clearRect (0, 0, juego.dadosTamaño, juego.dadosTamaño);
-
-     //dado
-
-     ctx.beginPath();
-
-     ctx.rect(0, 0, juego.dadosTamaño, juego.dadosTamaño);
-
-     ctx.fillStyle ="#FFFFFF";
-
-     ctx.fill();
-
-     ctx.closePath();
-
-     switch (numero){
-
-            case 1: 
-                dibujarCirculo(ctx, mitad, mitad);
-                break;
-
-            case 2:
-                dibujarCirculo(ctx, trescuartos, cuarto);
-                dibujarCirculo(ctx, cuarto, trescuartos);
-                break;
-
-            case 3:
-                dibujarCirculo(ctx, trescuartos, cuarto);
-                dibujarCirculo(ctx, cuarto, trescuartos);
-                dibujarCirculo(ctx, mitad, mitad);
-                break;
-
-            case 4:
-                dibujarCirculo(ctx, trescuartos, cuarto);
-                dibujarCirculo(ctx, cuarto, trescuartos);
-                dibujarCirculo(ctx, cuarto, cuarto);
-                dibujarCirculo(ctx, trescuartos, trescuartos);
-                break;
-
-            case 5:
-                dibujarCirculo(ctx, trescuartos, cuarto);
-                dibujarCirculo(ctx, cuarto, trescuartos);
-                dibujarCirculo(ctx, cuarto, cuarto);
-                dibujarCirculo(ctx, trescuartos, trescuartos);
-                dibujarCirculo(ctx, mitad, mitad);
-                break;
-
-            case 6:
-                dibujarCirculo(ctx, trescuartos, cuarto);
-                dibujarCirculo(ctx, cuarto, trescuartos);
-                dibujarCirculo(ctx, cuarto, cuarto);
-                dibujarCirculo(ctx, trescuartos, trescuartos);
-                dibujarCirculo(ctx, cuarto, mitad);
-                dibujarCirculo(ctx, trescuartos, mitad);
-                break;
-
-     }
-
+function cargarPerfiles() {
+    const perfiles = Storage.cargar("perfiles");
+    if (perfiles && perfiles.length >= 2) {
+        document.getElementById('jugador1-nombre').textContent = perfiles[0].nombre;
+        document.getElementById('jugador2-nombre').textContent = perfiles[1].nombre;
+        document.getElementById('turno-jugador').textContent = perfiles[0].nombre;
+    }
 }
 
-function dibujarCirculo (ctx, x , y){
-     
-    ctx.beginPath();
-
-    ctx.arc(x, y, radio, 0, 2 * Math.PI, false);
-
-    ctx.fillStyle = "#000000";
-
-    ctx.fill();
-
-    ctx.closePath();
-
+function inicializarJuego() {
+    tirarDados();
+    actualizarTablero();
 }
 
+// Tirar dados
 function tirarDados() {
-    juego.dados = [];
-    for(let i = 0; i < 5; i++) {
-        if(juego.seleccionados[i]) {
-            juego.dados.push(numAlAzar(1,6));
+    if (tiroActual > 3) return;
+    
+    for (let i = 0; i < 5; i++) {
+        if (!dadosBloqueados[i]) {
+            dados[i] = Math.floor(Math.random() * 6) + 1;
+        }
+    }
+    
+    tiroActual++;
+    actualizarDados();
+    actualizarControles();
+}
+
+// Actualizar visualización de dados
+function actualizarDados() {
+    for (let i = 0; i < 5; i++) {
+        const dado = document.getElementById(`dado${i + 1}`);
+        dado.textContent = dados[i];
+        dado.className = dadosBloqueados[i] ? 'dice bloqueado' : 'dice';
+    }
+    document.getElementById('tiro-actual').textContent = tiroActual;
+}
+
+// Bloquear/desbloquear dado
+function toggleDado(index) {
+    if (tiroActual > 1) {
+        dadosBloqueados[index] = !dadosBloqueados[index];
+        actualizarDados();
+    }
+}
+
+// Actualizar controles
+function actualizarControles() {
+    const btnTirar = document.getElementById('btn-tirar');
+    const btnAnotar = document.getElementById('btn-anotar');
+    
+    if (tiroActual > 3) {
+        btnTirar.disabled = true;
+        btnAnotar.disabled = false;
+    } else {
+        btnTirar.disabled = false;
+        btnAnotar.disabled = true;
+    }
+}
+
+// Calcular puntuación para una categoría
+function calcularPuntuacion(categoria) {
+    const conteo = contarDados();
+    
+    switch (categoria) {
+        case 'as': return conteo[1] * 1;
+        case 'doses': return conteo[2] * 2;
+        case 'treses': return conteo[3] * 3;
+        case 'cuatros': return conteo[4] * 4;
+        case 'cincos': return conteo[5] * 5;
+        case 'seis': return conteo[6] * 6;
+        case 'poker': return esPoker(conteo) ? 40 : 0;
+        case 'full': return esFull(conteo) ? 30 : 0;
+        case 'escalera': return esEscalera(conteo) ? 20 : 0;
+        case 'generala': return esGenerala(conteo) ? 50 : 0;
+        default: return 0;
+    }
+}
+
+// Contar frecuencia de cada dado
+function contarDados() {
+    const conteo = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+    dados.forEach(dado => conteo[dado]++);
+    return conteo;
+}
+
+// Verificar combinaciones
+function esPoker(conteo) {
+    return Object.values(conteo).some(count => count >= 4);
+}
+
+function esFull(conteo) {
+    const valores = Object.values(conteo);
+    return valores.includes(3) && valores.includes(2);
+}
+
+function esEscalera(conteo) {
+    const valores = Object.values(conteo);
+    return (valores[0] >= 1 && valores[1] >= 1 && valores[2] >= 1 && valores[3] >= 1 && valores[4] >= 1) ||
+           (valores[1] >= 1 && valores[2] >= 1 && valores[3] >= 1 && valores[4] >= 1 && valores[5] >= 1);
+}
+
+function esGenerala(conteo) {
+    return Object.values(conteo).some(count => count === 5);
+}
+
+// Seleccionar categoría para anotar
+function seleccionarCategoria(categoria, jugador) {
+    if (jugador !== jugadorActual) return;
+    
+    const jugadorKey = jugador === 0 ? 'p1' : 'p2';
+    const puntuacion = calcularPuntuacion(categoria);
+    
+    // Anotar puntuación
+    puntuaciones[jugadorKey][categoria] = puntuacion;
+    
+    // Actualizar tablero
+    actualizarTablero();
+    
+    // Cambiar turno
+    cambiarTurno();
+}
+
+// Anotar puntuación (función alternativa)
+function anotarPuntuacion() {
+    // Mostrar opciones disponibles
+    const jugadorKey = jugadorActual === 0 ? 'p1' : 'p2';
+    const categoriasDisponibles = [];
+    
+    Object.keys(puntuaciones[jugadorKey]).forEach(cat => {
+        if (cat !== 'subtotal' && cat !== 'bonus' && cat !== 'total' && puntuaciones[jugadorKey][cat] === null) {
+            categoriasDisponibles.push(cat);
+        }
+    });
+    
+    if (categoriasDisponibles.length > 0) {
+        // Seleccionar la primera categoría disponible automáticamente
+        const categoria = categoriasDisponibles[0];
+        seleccionarCategoria(categoria, jugadorActual);
+    }
+}
+
+// Cambiar turno
+function cambiarTurno() {
+    jugadorActual = jugadorActual === 0 ? 1 : 0;
+    
+    // Reiniciar dados
+    dados = [1, 1, 1, 1, 1];
+    dadosBloqueados = [false, false, false, false, false];
+    tiroActual = 1;
+    
+    // Actualizar interfaz
+    actualizarDados();
+    actualizarControles();
+    
+    // Actualizar nombre del jugador
+    const perfiles = Storage.cargar("perfiles");
+    if (perfiles && perfiles.length >= 2) {
+        document.getElementById('turno-jugador').textContent = perfiles[jugadorActual].nombre;
+    } else {
+        document.getElementById('turno-jugador').textContent = `Cliente ${jugadorActual + 1}`;
+    }
+    
+    // Verificar si el juego terminó
+    if (juegoTerminado()) {
+        finalizarJuego();
+    }
+}
+
+// Verificar si el juego terminó
+function juegoTerminado() {
+    const p1Completo = Object.keys(puntuaciones.p1).every(key => 
+        key === 'subtotal' || key === 'bonus' || key === 'total' || puntuaciones.p1[key] !== null
+    );
+    const p2Completo = Object.keys(puntuaciones.p2).every(key => 
+        key === 'subtotal' || key === 'bonus' || key === 'total' || puntuaciones.p2[key] !== null
+    );
+    
+    return p1Completo && p2Completo;
+}
+
+// Finalizar juego
+function finalizarJuego() {
+    const ganador = puntuaciones.p1.total > puntuaciones.p2.total ? 1 : 
+                   puntuaciones.p2.total > puntuaciones.p1.total ? 2 : 0;
+    
+    let mensaje = '';
+    if (ganador === 0) {
+        mensaje = '¡Empate!';
+    } else {
+        const perfiles = Storage.cargar("perfiles");
+        const nombreGanador = perfiles && perfiles[ganador - 1] ? perfiles[ganador - 1].nombre : `Cliente ${ganador}`;
+        mensaje = `¡${nombreGanador} gana con ${puntuaciones[ganador === 1 ? 'p1' : 'p2'].total} puntos!`;
+    }
+    
+    setTimeout(() => {
+        alert(`🎉 Juego terminado!\n\n${mensaje}\n\nP1: ${puntuaciones.p1.total} puntos\nP2: ${puntuaciones.p2.total} puntos`);
+    }, 500);
+}
+
+// Actualizar tablero
+function actualizarTablero() {
+    // Actualizar puntuaciones del jugador 1
+    Object.keys(puntuaciones.p1).forEach(cat => {
+        if (cat !== 'subtotal' && cat !== 'bonus' && cat !== 'total') {
+            const elemento = document.getElementById(`p1-${cat}`);
+            if (elemento) {
+                elemento.textContent = puntuaciones.p1[cat] !== null ? puntuaciones.p1[cat] : '-';
+                elemento.className = puntuaciones.p1[cat] !== null ? 'score-row completado' : 'score-row';
+            }
+        }
+    });
+    
+    // Actualizar puntuaciones del jugador 2
+    Object.keys(puntuaciones.p2).forEach(cat => {
+        if (cat !== 'subtotal' && cat !== 'bonus' && cat !== 'total') {
+            const elemento = document.getElementById(`p2-${cat}`);
+            if (elemento) {
+                elemento.textContent = puntuaciones.p2[cat] !== null ? puntuaciones.p2[cat] : '-';
+                elemento.className = puntuaciones.p2[cat] !== null ? 'score-row completado' : 'score-row';
+            }
+        }
+    });
+    
+    // Calcular subtotales y totales
+    calcularTotales();
+}
+
+// Calcular totales
+function calcularTotales() {
+    // Jugador 1
+    const p1Subtotal = ['as', 'doses', 'treses', 'cuatros', 'cincos', 'seis']
+        .map(cat => puntuaciones.p1[cat] || 0)
+        .reduce((sum, val) => sum + val, 0);
+    
+    puntuaciones.p1.subtotal = p1Subtotal;
+    puntuaciones.p1.bonus = p1Subtotal >= 63 ? 35 : 0;
+    
+    const p1Total = p1Subtotal + puntuaciones.p1.bonus + 
+        ['poker', 'full', 'escalera', 'generala']
+        .map(cat => puntuaciones.p1[cat] || 0)
+        .reduce((sum, val) => sum + val, 0);
+    
+    puntuaciones.p1.total = p1Total;
+    
+    // Jugador 2
+    const p2Subtotal = ['as', 'doses', 'treses', 'cuatros', 'cincos', 'seis']
+        .map(cat => puntuaciones.p2[cat] || 0)
+        .reduce((sum, val) => sum + val, 0);
+    
+    puntuaciones.p2.subtotal = p2Subtotal;
+    puntuaciones.p2.bonus = p2Subtotal >= 63 ? 35 : 0;
+    
+    const p2Total = p2Subtotal + puntuaciones.p2.bonus + 
+        ['poker', 'full', 'escalera', 'generala']
+        .map(cat => puntuaciones.p2[cat] || 0)
+        .reduce((sum, val) => sum + val, 0);
+    
+    puntuaciones.p2.total = p2Total;
+    
+    // Actualizar elementos del DOM
+    document.getElementById('p1-subtotal').textContent = p1Subtotal;
+    document.getElementById('p1-bonus').textContent = puntuaciones.p1.bonus;
+    document.getElementById('p1-total').textContent = p1Total;
+    
+    document.getElementById('p2-subtotal').textContent = p2Subtotal;
+    document.getElementById('p2-bonus').textContent = puntuaciones.p2.bonus;
+    document.getElementById('p2-total').textContent = p2Total;
+}
+
+// Nuevo juego
+function nuevoJuego() {
+    if (confirm('¿Estás seguro de que quieres empezar un nuevo juego?')) {
+        // Reiniciar variables
+        dados = [1, 1, 1, 1, 1];
+        dadosBloqueados = [false, false, false, false, false];
+        tiroActual = 1;
+        jugadorActual = 0;
+        
+        // Reiniciar puntuaciones
+        puntuaciones = {
+            p1: {
+                as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
+                poker: null, full: null, escalera: null, generala: null,
+                subtotal: 0, bonus: 0, total: 0
+            },
+            p2: {
+                as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
+                poker: null, full: null, escalera: null, generala: null,
+                subtotal: 0, bonus: 0, total: 0
+            }
+        };
+        
+        // Actualizar interfaz
+        actualizarDados();
+        actualizarControles();
+        actualizarTablero();
+        
+        const perfiles = Storage.cargar("perfiles");
+        if (perfiles && perfiles.length >= 2) {
+            document.getElementById('turno-jugador').textContent = perfiles[0].nombre;
+        } else {
+            document.getElementById('turno-jugador').textContent = 'Cliente 1';
         }
     }
 }
 
-function empezarJuego() {
-    juego.turno = numAlAzar(0, juego.cantJugadores - 1);
-    ["1", "2", "3", "4", "5", "6", "E", "F", "P", "G", "D", "T"].forEach(key => {
-        juego.puntos[key] = iniciarPuntaje(); 
-    });
+// Mostrar reglas
+function mostrarReglas() {
+    const reglas = `
+🎲 REGLAS DE LA GENERALA
 
-    juego.dados = [0, 0, 0, 0, 0];
-    juego.seleccionados = [true, true, true, true, true ];
-    //juego.dados = [0, 0, 0, 0, 0];
-}
+📊 PUNTUACIONES:
+• Ases (1): Suma de todos los 1
+• Doses (2): Suma de todos los 2
+• Treses (3): Suma de todos los 3
+• Cuatros (4): Suma de todos los 4
+• Cincos (5): Suma de todos los 5
+• Seis (6): Suma de todos los 6
 
-function esEscalera() {
-    return /12345|23456|13456/.test(juego.dados.join(""));
-}
+🎯 COMBINACIONES:
+• Poker: 4 dados iguales (40 puntos)
+• Full: 3 de un número + 2 de otro (30 puntos)
+• Escalera: 5 números consecutivos (20 puntos)
+• Generala: 5 dados iguales (50 puntos)
 
-function esGenerala() {
-    return /1{5}|2{5}|3{5}|4{5}|5{5}|6{5}/.test(juego.dados.join(""));
-}
+💰 BONUS:
+• Si sumas 63+ en la sección superior: +35 puntos
 
-function esPoker() {
-    return /1{4}[2-6]|12222|13333|14444|15555|16666|2{4}[3-6]|23333|24444|25555|26666|3{4}[4-6]|34444|35555|36666|4{4}[5-6]|45555|46666|5{4}6|56666/.test(juego.dados.join(""));
-}
-
-function esFull() {
-    return /1{2}[2-6]{3}|1{3}[2-6]{2}|2{2}[3-6]{3}|2{3}[3-6]{2}|3{2}[4-6]{3}|3{3}[4-6]{2}|4{2}[5-6]{3}|4{3}[5-6]{2}|5{2}6{3}|5{3}6{2}/.test(juego.dados.join(""));
-}
-
-function recargarDado() {
-
-}
-
-function onDeviceReady() {
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    empezarJuego();
-    tirarDados();
-    mostrarDados();
+🎮 CÓMO JUGAR:
+1. Tira los dados (máximo 3 veces)
+2. Bloquea los dados que quieras conservar
+3. Anota en una categoría disponible
+4. Cambia el turno
+5. ¡El que más puntos tenga gana!
+    `;
+    
+    alert(reglas);
 }

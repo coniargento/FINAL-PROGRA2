@@ -1,19 +1,16 @@
-document.addEventListener('deviceready', listo, false);
-
 const cantJugadores = 2;
 
 let perfiles = [];
 let jugador = 0;
 
-function listo(){
-    cargarPerfil();
-}
+// Inicializar cuando se carga la página
+document.addEventListener('DOMContentLoaded', cargarPerfil);
 
 function cargarPerfil() {
     document.getElementById("btn-guardar-perfil").addEventListener("click", guardarPerfil, false);
 
     perfiles = Storage.cargar("perfiles") || [];
-    jugador = Number(new URLSearchParams (window.location.search).get("jugador"));
+    jugador = Number(new URLSearchParams (window.location.search).get("player"));
 
     document.getElementById("jugador").innerHTML = jugador + 1;
 
@@ -42,7 +39,7 @@ function guardarPerfil(e) {
         Storage.guardar("perfiles", perfiles);
 
         if (perfiles.length < cantJugadores) {
-            window.location.href = "perfil.html?jugador=" + perfiles.length;
+            window.location.href = "perfil.html?player=" + perfiles.length;
         } else {
             window.location.href = "menu.html";
         }
@@ -66,8 +63,9 @@ function validarForm( ){
     }
 
     const img = document.getElementById("foto");
-    if(img.getAttribute("src") === "img/person.png"){
-        //todavía no se saco la foto y no es valido
+    const defaultImage = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSIyMCIgZmlsbD0iI2NjYyIvPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iI2NjYyIvPgo8L3N2Zz4=";
+    if(img.getAttribute("src") === defaultImage){
+        //todavía no se seleccionó la foto y no es valido
         img.classList.add("notValid");
         img.focus();
         return false;
@@ -87,15 +85,19 @@ function esValido(propiedad, valor){
 }
 
 function sacarFoto(){
-    navigator.camera.getPicture(foto, fotoError, {
-        destinationType: Camera.DestinationType.DATA_URL
-    });
-}
-
-function foto(data){
-    document.getElementById("foto").setAttribute("src", "data:image/jpeg;base64," + data);
-}
-
-function fotoError(err){
-    console.error("No se puede tomar la foto", err);
+    // Usar input file para seleccionar imagen
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("foto").setAttribute("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    input.click();
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Snake - Cafetería Arcade</title>
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <button class="btn-back" onclick="window.location.href='../menu.html'">← Volver</button>
+            <h1>🍰 Snake</h1>
+            <div class="score">Puntos: <span id="score">0</span></div>
+        </header>
+
+        <div class="game-area">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+        </div>
+
+        <div class="game-controls">
+            <div class="control-row">
+                <button class="control-btn" onclick="changeDirection('up')">↑</button>
+            </div>
+            <div class="control-row">
+                <button class="control-btn" onclick="changeDirection('left')">←</button>
+                <button class="control-btn" onclick="changeDirection('right')">→</button>
+            </div>
+            <div class="control-row">
+                <button class="control-btn" onclick="changeDirection('down')">↓</button>
+            </div>
+        </div>
+
+        <div class="game-info">
+            <button class="btn-primary" onclick="startGame()">Jugar</button>
+            <button class="btn-secondary" onclick="pauseGame()">Pausar</button>
+        </div>
+    </div>
+
+    <script src="../js/lib.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html> 

@@ -1,8 +1,7 @@
-document.addEventListener('deviceready', listo, false);
-
 const cantJugadores = 2;
 
-function listo() {
+// Función para inicializar la aplicación
+function inicializarApp() {
     let perfiles = Storage.cargar("perfiles");
     if (perfiles === null){
         window.location.href = "perfil.html?player=0";
@@ -12,3 +11,6 @@ function listo() {
         window.location.href = "menu.html";
     }
 }
+
+// Inicializar después de un pequeño delay para mostrar la pantalla de carga
+setTimeout(inicializarApp, 2000);

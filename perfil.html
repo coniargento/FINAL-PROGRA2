@@ -4,18 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
-    <title>Perfil</title>
+    <title>Perfil - Cafetería Arcade</title>
 </head>
 <body>
-    <h1>Perfil del jugador <span id="jugador"></span></h1>
+    <div class="profile-container">
+        <header class="profile-header">
+            <button class="btn-back" onclick="window.location.href='index.html'">← Volver</button>
+            <h1>👤 Perfil del Cliente <span id="jugador"></span></h1>
+        </header>
 
-    <form>
-        <label for="nombre">Nombre: </label><input type="nombre"><br />
-        <label for="apodo">Apodo: </label><input type="apodo"><br />
-        <label for="color">Color: </label><input id="color" type="color"><br/>
-        <label for="foto">Foto: </label><img id="foto" src="img/person.png" alt="foto" onclick="sacarFoto()"> <br>
-        <button id="btn-guardar-perfil">Guardar</button>
-    </form>
+        <div class="profile-form">
+            <form>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input id="nombre" type="text" placeholder="Ingresa tu nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label for="apodo">Apodo:</label>
+                    <input id="apodo" type="text" placeholder="Ingresa tu apodo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="color">Café favorito:</label>
+                    <input id="color" type="color" value="#8B4513">
+                </div>
+                
+                <div class="form-group">
+                    <label for="foto">Foto de perfil:</label>
+                    <div class="photo-container">
+                        <img id="foto" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSIyMCIgZmlsbD0iI2NjYyIvPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iI2NjYyIvPgo8L3N2Zz4=" alt="foto" onclick="sacarFoto()">
+                        <button type="button" class="btn-photo" onclick="sacarFoto()">☕ Cambiar foto</button>
+                    </div>
+                </div>
+                
+                <button type="button" id="btn-guardar-perfil" class="btn-primary">☕ Guardar Perfil</button>
+            </form>
+        </div>
+    </div>
     
     <script src="js/lib.js"></script>
     <script src="js/perfil.js"></script>

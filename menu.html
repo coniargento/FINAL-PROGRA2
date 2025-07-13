@@ -4,17 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
-    <title>3 juegos</title>
+    <title>Cafetería Arcade - Menú Principal</title>
 </head>
 <body>
-    <h1>3 juegos</h1>
+    <div class="menu-container">
+        <header class="menu-header">
+            <img src="img/logo.png" alt="Logo" class="logo">
+            <h1 class="menu-title">☕ Cafetería Arcade</h1>
+            <p class="menu-subtitle">¡Disfruta un café mientras juegas!</p>
+        </header>
 
-    <ul>
-        <li><a href="ta-te-ti/index.html">Ta-Te-Ti</a></li>
-        <li><a href="generala/index.html">Generala</a></li>
-        <li><a href="super-juego/index.html">???</a></li>
-    </ul>
+        <nav class="games-grid">
+            <div class="game-card" onclick="window.location.href='ta-te-ti/index.html'">
+                <div class="game-icon">☕</div>
+                <h3>Ta-Te-Ti</h3>
+                <p>Clásico juego de tres en línea</p>
+                <div class="game-status">✅ Disponible</div>
+            </div>
+
+            <div class="game-card" onclick="window.location.href='generala/index.html'">
+                <div class="game-icon">🎲</div>
+                <h3>Generala</h3>
+                <p>Juego de dados estratégico</p>
+                <div class="game-status">✅ Disponible</div>
+            </div>
+
+            <div class="game-card" onclick="window.location.href='snake/index.html'">
+                <div class="game-icon">🍰</div>
+                <h3>Snake</h3>
+                <p>Controla la serpiente hambrienta</p>
+                <div class="game-status">✅ Disponible</div>
+            </div>
+        </nav>
+
+        <footer class="menu-footer">
+            <button class="btn-secondary" onclick="window.location.href='perfil.html'">👤 Editar Perfiles</button>
+            <button class="btn-secondary" onclick="resetGame()">🔄 Reiniciar Juego</button>
+        </footer>
+    </div>
 
     <script src="js/lib.js"></script>
+    <script>
+        function resetGame() {
+            if (confirm('¿Estás seguro de que quieres reiniciar el juego? Se borrarán todos los perfiles.')) {
+                Storage.limpiar();
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Cargar perfiles para mostrar información
+        document.addEventListener('DOMContentLoaded', function() {
+            const perfiles = Storage.cargar("perfiles");
+            if (perfiles && perfiles.length > 0) {
+                const playerInfo = document.createElement('div');
+                playerInfo.className = 'player-info';
+                playerInfo.innerHTML = `
+                    <p>👥 Jugadores: ${perfiles.length}/2</p>
+                    <p>🎯 ${perfiles[0]?.nombre || 'Jugador 1'} vs ${perfiles[1]?.nombre || 'Jugador 2'}</p>
+                `;
+                document.querySelector('.menu-header').appendChild(playerInfo);
+            }
+        });
+    </script>
 </body>
 </html>

@@ -2,20 +2,26 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
         <link rel="stylesheet" href="css/index.css">
-        <title>MI APP</title>
+        <title>Cafetería Arcade - Cargando...</title>
     </head>
     <body>
-        <div class="app">
-            <h1>Mi app</h1>
+        <div class="loading-container">
+            <div class="loading-content">
+                <img src="img/logo.png" alt="Logo" class="loading-logo">
+                <h1 class="loading-title">☕ Cafetería Arcade</h1>
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                </div>
+                <p class="loading-text">Cargando juegos...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
         </div>
 
-        <script src="cordova.js"></script>
         <script src="js/index.js"></script>
         <script src="js/lib.js"></script>
         <script src="js/perfil.js"></script>
