@@ -9,27 +9,53 @@
 <body>
     <div class="menu-container">
         <header class="menu-header">
-            <img src="img/logo.png" alt="Logo" class="logo">
-            <h1 class="menu-title">☕ Cafetería Arcade</h1>
-            <p class="menu-subtitle">¡Disfruta un café mientras juegas!</p>
+            <img src="img/logo-kofigames.png" alt="Logo" class="logo">
+            <p class="menu-subtitle">Mientras disfrutas tu café, tenes estos juegos para entretenerte</p>
         </header>
 
         <nav class="games-grid">
             <div class="game-card" onclick="window.location.href='ta-te-ti/index.html'">
-                <div class="game-icon">☕</div>
-                <h3>Ta-Te-Ti</h3>
+                <h3 class="game-title">Ta-Te-Ti</h3>
+                <div class="game-preview tateti-preview">
+                    <div class="preview-grid">
+                        <div class="preview-cell">☕</div>
+                        <div class="preview-cell">🍰</div>
+                        <div class="preview-cell"></div>
+                        <div class="preview-cell">🍰</div>
+                        <div class="preview-cell">☕</div>
+                        <div class="preview-cell"></div>
+                        <div class="preview-cell"></div>
+                        <div class="preview-cell"></div>
+                        <div class="preview-cell">☕</div>
+                    </div>
+                </div>
                 <p>Clásico juego de tres en línea</p>
             </div>
 
             <div class="game-card" onclick="window.location.href='generala/index.html'">
-                <div class="game-icon">🎲</div>
-                <h3>Generala</h3>
+                <h3 class="game-title">Generala</h3>
+                <div class="game-preview generala-preview">
+                    <div class="dice-preview">
+                        <div class="dice">⚀</div>
+                        <div class="dice">⚁</div>
+                        <div class="dice">⚂</div>
+                        <div class="dice">⚃</div>
+                        <div class="dice">⚄</div>
+                    </div>
+                </div>
                 <p>Juego de dados estratégico</p>
             </div>
 
             <div class="game-card" onclick="window.location.href='snake/index.html'">
-                <div class="game-icon">🍰</div>
-                <h3>Snake</h3>
+                <h3 class="game-title">Snake</h3>
+                <div class="game-preview snake-preview">
+                    <div class="snake-canvas">
+                        <div class="snake-segment head">🐍</div>
+                        <div class="snake-segment">🟢</div>
+                        <div class="snake-segment">🟢</div>
+                        <div class="food">🍎</div>
+                    </div>
+                </div>
                 <p>Controla la serpiente hambrienta</p>
             </div>
         </nav>

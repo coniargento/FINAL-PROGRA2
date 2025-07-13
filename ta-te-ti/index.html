@@ -8,42 +8,53 @@
         <title>Ta Te Ti - Cafetería Arcade</title>
     </head>
     <body>
-        <div class="app">
-            <h1>☕ TA-TE-TI</h1>
-            <div id="juego-terminado" class="nodisp">
-                <h2>Juego Terminado</h2>
-                <div class="mensaje"><!-- mensaje si sale ganador o empate --></div>
-                <button onclick="empezarJuego()">Jugar de nuevo</button>
+            <div class="game-container">
+        <div class="overlay"></div>
+        <header class="game-header">
+                <button class="btn-back" onclick="window.location.href='../menu.html'">← Volver</button>
+                <h1>☕ Ta-Te-Ti</h1>
+                <div class="score">Turno: <span id="turnos"></span></div>
+            </header>
+
+            <div class="game-area">
+                <div id="juego-terminado" class="nodisp game-over">
+                    <h2>🎉 Juego Terminado</h2>
+                    <div class="mensaje"><!-- mensaje si sale ganador o empate --></div>
+                    <button class="btn-primary" onclick="empezarJuego()">☕ Jugar de nuevo</button>
+                </div>
+                
+                <div id="main" class="tateti-main">
+                    <div class="turno-info">Turno de: <span id="turnos-display"></span></div>
+                    <table id="ta-te-ti" class="tateti-table">
+                        <caption>☕ vs 🍰</caption>
+                        <tbody>
+                            <tr>
+                                <td onclick="jugar(0,0)"></td>
+                                <td onclick="jugar(0,1)"></td>
+                                <td onclick="jugar(0,2)"></td>
+                            </tr>
+                            <tr>
+                                <td onclick="jugar(1,0)"></td>
+                                <td onclick="jugar(1,1)"></td>
+                                <td onclick="jugar(1,2)"></td>
+                            </tr>
+                            <tr>
+                                <td onclick="jugar(2,0)"></td>
+                                <td onclick="jugar(2,1)"></td>
+                                <td onclick="jugar(2,2)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div id="main">
-                <div>Turno de jugador: <span id="turnos"></span></div>
-                <table id="ta-te-ti">
-                    <caption>Ta-Te-Ti</caption>
-                    <thead>
-                        <tr>
-                            <th colspan="3"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td onclick="jugar(0,0)"></td>
-                            <td onclick="jugar(0,1)"></td>
-                            <td onclick="jugar(0,2)"></td>
-                        </tr>
-                        <tr>
-                            <td onclick="jugar(1,0)"></td>
-                            <td onclick="jugar(1,1)"></td>
-                            <td onclick="jugar(1,2)"></td>
-                        </tr>
-                        <tr>
-                            <td onclick="jugar(2,0)"></td>
-                            <td onclick="jugar(2,1)"></td>
-                            <td onclick="jugar(2,2)"></td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <div class="game-info">
+                <button class="btn-primary" onclick="empezarJuego()">🔄 Nuevo Juego</button>
+                <button class="btn-secondary" onclick="mostrarReglas()">📖 Reglas</button>
             </div>
         </div>
+        
+        <script src="../js/lib.js"></script>
         <script src="js/index.js"></script>
     </body>
 </html>
