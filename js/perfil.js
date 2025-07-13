@@ -12,7 +12,8 @@ function cargarPerfiles() {
         document.getElementById("nombre1").value = perfiles[0].nombre || "";
         document.getElementById("apodo1").value = perfiles[0].apodo || "";
         document.getElementById("color1").value = perfiles[0].color || "#8B4513";
-        document.getElementById("foto1").setAttribute("src", perfiles[0].foto || getDefaultImage());
+        document.getElementById("foto1").setAttribute("src", perfiles[0].foto || "img/avatar1.png");
+        actualizarAvatarSeleccionado(1, perfiles[0].avatarIndex || 1);
     }
     
     // Cargar datos del jugador 2
@@ -20,7 +21,8 @@ function cargarPerfiles() {
         document.getElementById("nombre2").value = perfiles[1].nombre || "";
         document.getElementById("apodo2").value = perfiles[1].apodo || "";
         document.getElementById("color2").value = perfiles[1].color || "#D2691E";
-        document.getElementById("foto2").setAttribute("src", perfiles[1].foto || getDefaultImage());
+        document.getElementById("foto2").setAttribute("src", perfiles[1].foto || "img/avatar2.png");
+        actualizarAvatarSeleccionado(2, perfiles[1].avatarIndex || 2);
     }
 }
 
@@ -40,7 +42,8 @@ function guardarPerfil(numeroJugador) {
             nombre: document.getElementById("nombre" + numeroJugador).value,
             apodo: document.getElementById("apodo" + numeroJugador).value,
             color: document.getElementById("color" + numeroJugador).value,
-            foto: document.getElementById("foto" + numeroJugador).getAttribute("src")
+            foto: document.getElementById("foto" + numeroJugador).getAttribute("src"),
+            avatarIndex: getAvatarIndex(numeroJugador)
         };
         
         Storage.guardar("perfiles", perfiles);
@@ -68,11 +71,10 @@ function validarForm(numeroJugador) {
     }
     
     const img = document.getElementById("foto" + numeroJugador);
-    const defaultImage = getDefaultImage();
     
-    if (img.getAttribute("src") === defaultImage) {
+    if (!img.getAttribute("src") || img.getAttribute("src").includes("data:image/svg+xml")) {
         img.classList.add("notValid");
-        mostrarMensaje("Debes seleccionar una foto de perfil", "error");
+        mostrarMensaje("Debes seleccionar un avatar de perfil", "error");
         return false;
     } else {
         img.classList.remove("notValid");
@@ -81,27 +83,51 @@ function validarForm(numeroJugador) {
     return true;
 }
 
-function sacarFoto(numeroJugador) {
-    // Usar input file para seleccionar imagen
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById("foto" + numeroJugador).setAttribute("src", e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-    input.click();
+function toggleAvatarOptions(numeroJugador) {
+    const optionsContainer = document.getElementById(`avatar-options-${numeroJugador}`);
+    const isVisible = optionsContainer.style.display !== 'none';
+    
+    // Cerrar todas las opciones de avatar primero
+    document.querySelectorAll('.avatar-options').forEach(container => {
+        container.style.display = 'none';
+    });
+    
+    // Si las opciones no estaban visibles, mostrarlas
+    if (!isVisible) {
+        optionsContainer.style.display = 'grid';
+    }
 }
 
-function getDefaultImage() {
-    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSIyMCIgZmlsbD0iI2NjYyIvPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iI2NjYyIvPgo8L3N2Zz4=";
+function seleccionarAvatar(numeroJugador, avatarIndex) {
+    const avatarSrc = `img/avatar${avatarIndex}.png`;
+    document.getElementById("foto" + numeroJugador).setAttribute("src", avatarSrc);
+    actualizarAvatarSeleccionado(numeroJugador, avatarIndex);
+    
+    // Ocultar las opciones después de seleccionar
+    document.getElementById(`avatar-options-${numeroJugador}`).style.display = 'none';
 }
+
+function actualizarAvatarSeleccionado(numeroJugador, avatarIndex) {
+    // Remover selección previa
+    const container = document.querySelector(`#form-jugador${numeroJugador} .avatar-options`);
+    container.querySelectorAll('.avatar-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Marcar el avatar seleccionado
+    const selectedAvatar = container.querySelector(`.avatar-option:nth-child(${avatarIndex})`);
+    if (selectedAvatar) {
+        selectedAvatar.classList.add('selected');
+    }
+}
+
+function getAvatarIndex(numeroJugador) {
+    const fotoSrc = document.getElementById("foto" + numeroJugador).getAttribute("src");
+    const match = fotoSrc.match(/avatar(\d+)\.png/);
+    return match ? parseInt(match[1]) : 1;
+}
+
+
 
 function mostrarMensaje(mensaje, tipo = "success") {
     // Crear elemento de mensaje

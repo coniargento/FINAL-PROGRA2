@@ -10,25 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Ta-Te-Ti iniciado');
     empezarJuego();
     hacerTabla();
-    crearParticulas();
 });
 
-function crearParticulas() {
-    const particulas = ['☕', '🍰', '☕', '🍰'];
-    setInterval(() => {
-        const particula = document.createElement('div');
-        particula.className = 'particula';
-        particula.textContent = particulas[Math.floor(Math.random() * particulas.length)];
-        particula.style.left = Math.random() * window.innerWidth + 'px';
-        document.querySelector('.game-container').appendChild(particula);
-        
-        setTimeout(() => {
-            if (particula.parentNode) {
-                particula.parentNode.removeChild(particula);
-            }
-        }, 6000);
-    }, 2000);
-}
+
 
 document.getElementById("turnos").innerHTML = juego.turnos;
 
@@ -54,8 +38,14 @@ function hacerTabla() {
     document.getElementById("turnos-display").innerHTML = turnoEmoji;
     for (let r = 0; r < 3; r++){
         for (let c = 0; c < 3; c++) {
-            cont.querySelector("tr:nth-of-type(" + (r + 1) + ") td:nth-of-type(" + (c + 1) + ")")
-                .innerHTML = juego.tabla[r][c];
+            const celda = cont.querySelector("tr:nth-of-type(" + (r + 1) + ") td:nth-of-type(" + (c + 1) + ")");
+            if (juego.tabla[r][c] === "☕") {
+                celda.innerHTML = '<img src="../img/cafe-ficha.png" alt="Café" class="ficha-img">';
+            } else if (juego.tabla[r][c] === "🍰") {
+                celda.innerHTML = '<img src="../img/cafe2.png" alt="Cafeparallevar" class="ficha-img">';
+            } else {
+                celda.innerHTML = "";
+            }
         }
     }
    
@@ -66,19 +56,6 @@ function jugar(r, c) {
         if(juego.tabla [r] [c] === "&nbsp;") {
             const ficha = juego.turnos === 1 ? "☕" : "🍰";
             juego.tabla [r] [c] = ficha;
-            
-            // Efecto visual al colocar ficha
-            const celda = document.querySelector(`#ta-te-ti tbody tr:nth-of-type(${r + 1}) td:nth-of-type(${c + 1})`);
-            celda.style.transform = 'scale(0.8)';
-            celda.style.opacity = '0.5';
-            
-            setTimeout(() => {
-                celda.style.transform = 'scale(1.1)';
-                celda.style.opacity = '1';
-                setTimeout(() => {
-                    celda.style.transform = 'scale(1)';
-                }, 200);
-            }, 100);
             
             hacerTabla();
             
