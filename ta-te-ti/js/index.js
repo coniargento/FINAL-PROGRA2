@@ -39,7 +39,7 @@ function empezarJuego() {
         turnos: juego.turnos === 1 ? 2 : 1,
         ganador: 0
     };
-    document.getElementById("juego-terminado").classList.add("nodisp");
+    document.getElementById("game-over-modal").classList.add("nodisp");
     hacerTabla();
 };
 
@@ -163,8 +163,13 @@ function terminado(){
         msg = `¡Ganó ${ganadorNombre}!`;
         crearConfeti();
     }
-    document.querySelector("#juego-terminado .mensaje").innerHTML = msg;
-    document.getElementById("juego-terminado").classList.remove("nodisp");
+    document.querySelector("#game-over-modal .mensaje").innerHTML = msg;
+    document.getElementById("game-over-modal").classList.remove("nodisp");
+}
+
+function cerrarModal() {
+    document.getElementById("game-over-modal").classList.add("nodisp");
+    window.location.href = '../menu.html';
 }
 
 function crearConfeti() {

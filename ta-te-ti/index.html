@@ -16,12 +16,6 @@
             </header>
 
             <div class="game-area">
-                <div id="juego-terminado" class="nodisp game-over">
-                    <h2>🎉 Juego Terminado</h2>
-                    <div class="mensaje"><!-- mensaje si sale ganador o empate --></div>
-                    <button class="btn-primary" onclick="empezarJuego()">☕ Jugar de nuevo</button>
-                </div>
-                
                 <div id="main" class="tateti-main">
                     <div class="turno-info">Turno de: <span id="turnos-display"></span></div>
                     <table id="ta-te-ti" class="tateti-table">
@@ -49,6 +43,18 @@
             <div class="game-info">
                 <button class="btn-primary" onclick="empezarJuego()">🔄 Nuevo Juego</button>
                 <button class="btn-secondary" onclick="mostrarReglas()">📖 Reglas</button>
+            </div>
+        </div>
+        
+        <!-- Popup Modal para fin de juego -->
+        <div id="game-over-modal" class="modal nodisp">
+            <div class="modal-content">
+                <h2>🎉 Juego Terminado</h2>
+                <div class="mensaje"><!-- mensaje si sale ganador o empate --></div>
+                <div class="modal-buttons">
+                    <button class="btn-primary" onclick="empezarJuego()">☕ Jugar de nuevo</button>
+                    <button class="btn-secondary" onclick="cerrarModal()">🏠 Volver al menú</button>
+                </div>
             </div>
         </div>
         

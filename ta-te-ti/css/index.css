@@ -371,6 +371,90 @@ body {
     display: none !important;
 }
 
+/* Modal Popup */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: rgba(255,255,255,0.95);
+    border-radius: 25px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+    max-width: 90%;
+    animation: slideIn 0.3s ease;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(139, 69, 19, 0.1) 50%, transparent 70%);
+    animation: borderFlow 2s linear infinite;
+    pointer-events: none;
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.modal-content .mensaje {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 25px 0;
+    color: #333;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(210, 105, 30, 0.1));
+    border-radius: 15px;
+    border: 1px solid rgba(139, 69, 19, 0.2);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .game-container {
@@ -421,6 +505,24 @@ body {
     }
     
     .game-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .modal-content .mensaje {
+        font-size: 1.2rem;
+    }
+    
+    .modal-buttons {
         flex-direction: column;
         align-items: center;
     }
