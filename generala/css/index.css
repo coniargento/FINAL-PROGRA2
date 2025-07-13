@@ -76,7 +76,7 @@ body {
 }
 
 .game-logo {
-    height: 80px;
+    height: 200px;
     width: auto;
     filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
     position: absolute;
@@ -331,7 +331,7 @@ body {
     }
     
     .game-logo {
-        height: 80px;
+        height: 100px;
     }
     
     .dice {

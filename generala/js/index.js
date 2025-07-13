@@ -6,13 +6,13 @@ let jugadorActual = 0;
 let puntuaciones = {
     p1: {
         as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
-        poker: null, full: null, escalera: null, generala: null,
-        subtotal: 0, bonus: 0, total: 0
+        poker: null, full: null, escalera: null, generala: null, dobleGenerala: null,
+        total: 0
     },
     p2: {
         as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
-        poker: null, full: null, escalera: null, generala: null,
-        subtotal: 0, bonus: 0, total: 0
+        poker: null, full: null, escalera: null, generala: null, dobleGenerala: null,
+        total: 0
     }
 };
 
@@ -32,7 +32,11 @@ function cargarPerfiles() {
 }
 
 function inicializarJuego() {
-    tirarDados();
+    tiroActual = 1;
+    actualizarDados();
+    actualizarControles();
+    // No tirar dados automáticamente
+    // tirarDados(); // Eliminar esta línea
     actualizarTablero();
 }
 
@@ -72,14 +76,11 @@ function toggleDado(index) {
 // Actualizar controles
 function actualizarControles() {
     const btnTirar = document.getElementById('btn-tirar');
-    const btnAnotar = document.getElementById('btn-anotar');
     
     if (tiroActual > 3) {
         btnTirar.disabled = true;
-        btnAnotar.disabled = false;
     } else {
         btnTirar.disabled = false;
-        btnAnotar.disabled = true;
     }
 }
 
@@ -98,6 +99,7 @@ function calcularPuntuacion(categoria) {
         case 'full': return esFull(conteo) ? 30 : 0;
         case 'escalera': return esEscalera(conteo) ? 20 : 0;
         case 'generala': return esGenerala(conteo) ? 50 : 0;
+        case 'dobleGenerala': return esDobleGenerala(conteo) ? 100 : 0;
         default: return 0;
     }
 }
@@ -129,9 +131,13 @@ function esGenerala(conteo) {
     return Object.values(conteo).some(count => count === 5);
 }
 
+function esDobleGenerala(conteo) {
+    return Object.values(conteo).some(count => count === 5);
+}
+
 // Seleccionar categoría para anotar
 function seleccionarCategoria(categoria, jugador) {
-    if (jugador !== jugadorActual) return;
+    if (jugador !== jugadorActual || tiroActual <= 1) return;
     
     const jugadorKey = jugador === 0 ? 'p1' : 'p2';
     const puntuacion = calcularPuntuacion(categoria);
@@ -153,7 +159,7 @@ function anotarPuntuacion() {
     const categoriasDisponibles = [];
     
     Object.keys(puntuaciones[jugadorKey]).forEach(cat => {
-        if (cat !== 'subtotal' && cat !== 'bonus' && cat !== 'total' && puntuaciones[jugadorKey][cat] === null) {
+        if (cat !== 'total' && puntuaciones[jugadorKey][cat] === null) {
             categoriasDisponibles.push(cat);
         }
     });
@@ -195,10 +201,10 @@ function cambiarTurno() {
 // Verificar si el juego terminó
 function juegoTerminado() {
     const p1Completo = Object.keys(puntuaciones.p1).every(key => 
-        key === 'subtotal' || key === 'bonus' || key === 'total' || puntuaciones.p1[key] !== null
+        key === 'total' || puntuaciones.p1[key] !== null
     );
     const p2Completo = Object.keys(puntuaciones.p2).every(key => 
-        key === 'subtotal' || key === 'bonus' || key === 'total' || puntuaciones.p2[key] !== null
+        key === 'total' || puntuaciones.p2[key] !== null
     );
     
     return p1Completo && p2Completo;
@@ -227,7 +233,7 @@ function finalizarJuego() {
 function actualizarTablero() {
     // Actualizar puntuaciones del jugador 1
     Object.keys(puntuaciones.p1).forEach(cat => {
-        if (cat !== 'subtotal' && cat !== 'bonus' && cat !== 'total') {
+        if (cat !== 'total') {
             const elemento = document.getElementById(`p1-${cat}`);
             if (elemento) {
                 elemento.textContent = puntuaciones.p1[cat] !== null ? puntuaciones.p1[cat] : '-';
@@ -238,7 +244,7 @@ function actualizarTablero() {
     
     // Actualizar puntuaciones del jugador 2
     Object.keys(puntuaciones.p2).forEach(cat => {
-        if (cat !== 'subtotal' && cat !== 'bonus' && cat !== 'total') {
+        if (cat !== 'total') {
             const elemento = document.getElementById(`p2-${cat}`);
             if (elemento) {
                 elemento.textContent = puntuaciones.p2[cat] !== null ? puntuaciones.p2[cat] : '-';
@@ -247,49 +253,28 @@ function actualizarTablero() {
         }
     });
     
-    // Calcular subtotales y totales
+    // Calcular totales
     calcularTotales();
 }
 
 // Calcular totales
 function calcularTotales() {
     // Jugador 1
-    const p1Subtotal = ['as', 'doses', 'treses', 'cuatros', 'cincos', 'seis']
-        .map(cat => puntuaciones.p1[cat] || 0)
-        .reduce((sum, val) => sum + val, 0);
-    
-    puntuaciones.p1.subtotal = p1Subtotal;
-    puntuaciones.p1.bonus = p1Subtotal >= 63 ? 35 : 0;
-    
-    const p1Total = p1Subtotal + puntuaciones.p1.bonus + 
-        ['poker', 'full', 'escalera', 'generala']
+    const p1Total = ['as', 'doses', 'treses', 'cuatros', 'cincos', 'seis', 'poker', 'full', 'escalera', 'generala', 'dobleGenerala']
         .map(cat => puntuaciones.p1[cat] || 0)
         .reduce((sum, val) => sum + val, 0);
     
     puntuaciones.p1.total = p1Total;
     
     // Jugador 2
-    const p2Subtotal = ['as', 'doses', 'treses', 'cuatros', 'cincos', 'seis']
-        .map(cat => puntuaciones.p2[cat] || 0)
-        .reduce((sum, val) => sum + val, 0);
-    
-    puntuaciones.p2.subtotal = p2Subtotal;
-    puntuaciones.p2.bonus = p2Subtotal >= 63 ? 35 : 0;
-    
-    const p2Total = p2Subtotal + puntuaciones.p2.bonus + 
-        ['poker', 'full', 'escalera', 'generala']
+    const p2Total = ['as', 'doses', 'treses', 'cuatros', 'cincos', 'seis', 'poker', 'full', 'escalera', 'generala', 'dobleGenerala']
         .map(cat => puntuaciones.p2[cat] || 0)
         .reduce((sum, val) => sum + val, 0);
     
     puntuaciones.p2.total = p2Total;
     
     // Actualizar elementos del DOM
-    document.getElementById('p1-subtotal').textContent = p1Subtotal;
-    document.getElementById('p1-bonus').textContent = puntuaciones.p1.bonus;
     document.getElementById('p1-total').textContent = p1Total;
-    
-    document.getElementById('p2-subtotal').textContent = p2Subtotal;
-    document.getElementById('p2-bonus').textContent = puntuaciones.p2.bonus;
     document.getElementById('p2-total').textContent = p2Total;
 }
 
@@ -306,13 +291,13 @@ function nuevoJuego() {
         puntuaciones = {
             p1: {
                 as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
-                poker: null, full: null, escalera: null, generala: null,
-                subtotal: 0, bonus: 0, total: 0
+                poker: null, full: null, escalera: null, generala: null, dobleGenerala: null,
+                total: 0
             },
             p2: {
                 as: null, doses: null, treses: null, cuatros: null, cincos: null, seis: null,
-                poker: null, full: null, escalera: null, generala: null,
-                subtotal: 0, bonus: 0, total: 0
+                poker: null, full: null, escalera: null, generala: null, dobleGenerala: null,
+                total: 0
             }
         };
         
@@ -348,9 +333,9 @@ function mostrarReglas() {
 • Full: 3 de un número + 2 de otro (30 puntos)
 • Escalera: 5 números consecutivos (20 puntos)
 • Generala: 5 dados iguales (50 puntos)
+• Doble Generala: 5 dados iguales (100 puntos)
 
-💰 BONUS:
-• Si sumas 63+ en la sección superior: +35 puntos
+
 
 🎮 CÓMO JUGAR:
 1. Tira los dados (máximo 3 veces)

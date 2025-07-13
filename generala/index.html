@@ -26,7 +26,6 @@
                 </div>
                 <div class="dice-controls">
                     <button class="btn-primary" onclick="tirarDados()" id="btn-tirar">🎲 Tirar Dados</button>
-                    <button class="btn-secondary" onclick="anotarPuntuacion()" id="btn-anotar" disabled>📝 Anotar</button>
                 </div>
                 <div class="tiros-info">
                     <p>Tiro: <span id="tiro-actual">1</span>/3</p>
@@ -39,37 +38,30 @@
                     <div class="player-column">
                         <h4 id="jugador1-nombre">Cliente 1</h4>
                         <div class="score-row" onclick="seleccionarCategoria('as', 0)">
-                            <span>Ases (1)</span>
+                            <span>1</span>
                             <span id="p1-as">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('doses', 0)">
-                            <span>Doses (2)</span>
+                            <span>2</span>
                             <span id="p1-doses">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('treses', 0)">
-                            <span>Treses (3)</span>
+                            <span>3</span>
                             <span id="p1-treses">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('cuatros', 0)">
-                            <span>Cuatros (4)</span>
+                            <span>4</span>
                             <span id="p1-cuatros">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('cincos', 0)">
-                            <span>Cincos (5)</span>
+                            <span>5</span>
                             <span id="p1-cincos">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('seis', 0)">
-                            <span>Seis (6)</span>
+                            <span>6</span>
                             <span id="p1-seis">-</span>
                         </div>
-                        <div class="score-row subtotal">
-                            <span>Subtotal</span>
-                            <span id="p1-subtotal">0</span>
-                        </div>
-                        <div class="score-row bonus">
-                            <span>Bonus (+35)</span>
-                            <span id="p1-bonus">0</span>
-                        </div>
+
                         <div class="score-row" onclick="seleccionarCategoria('poker', 0)">
                             <span>Poker</span>
                             <span id="p1-poker">-</span>
@@ -86,6 +78,10 @@
                             <span>Generala</span>
                             <span id="p1-generala">-</span>
                         </div>
+                        <div class="score-row" onclick="seleccionarCategoria('dobleGenerala', 0)">
+                            <span>Doble Generala</span>
+                            <span id="p1-dobleGenerala">-</span>
+                        </div>
                         <div class="score-row total">
                             <span>Total</span>
                             <span id="p1-total">0</span>
@@ -95,37 +91,30 @@
                     <div class="player-column">
                         <h4 id="jugador2-nombre">Cliente 2</h4>
                         <div class="score-row" onclick="seleccionarCategoria('as', 1)">
-                            <span>Ases (1)</span>
+                            <span>1</span>
                             <span id="p2-as">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('doses', 1)">
-                            <span>Doses (2)</span>
+                            <span>2</span>
                             <span id="p2-doses">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('treses', 1)">
-                            <span>Treses (3)</span>
+                            <span>3</span>
                             <span id="p2-treses">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('cuatros', 1)">
-                            <span>Cuatros (4)</span>
+                            <span>4</span>
                             <span id="p2-cuatros">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('cincos', 1)">
-                            <span>Cincos (5)</span>
+                            <span>5</span>
                             <span id="p2-cincos">-</span>
                         </div>
                         <div class="score-row" onclick="seleccionarCategoria('seis', 1)">
-                            <span>Seis (6)</span>
+                            <span>6</span>
                             <span id="p2-seis">-</span>
                         </div>
-                        <div class="score-row subtotal">
-                            <span>Subtotal</span>
-                            <span id="p2-subtotal">0</span>
-                        </div>
-                        <div class="score-row bonus">
-                            <span>Bonus (+35)</span>
-                            <span id="p2-bonus">0</span>
-                        </div>
+
                         <div class="score-row" onclick="seleccionarCategoria('poker', 1)">
                             <span>Poker</span>
                             <span id="p2-poker">-</span>
@@ -141,6 +130,10 @@
                         <div class="score-row" onclick="seleccionarCategoria('generala', 1)">
                             <span>Generala</span>
                             <span id="p2-generala">-</span>
+                        </div>
+                        <div class="score-row" onclick="seleccionarCategoria('dobleGenerala', 1)">
+                            <span>Doble Generala</span>
+                            <span id="p2-dobleGenerala">-</span>
                         </div>
                         <div class="score-row total">
                             <span>Total</span>
