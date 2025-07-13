@@ -1,43 +1,378 @@
 * {
-    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color: darkgreen;
-    font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
-    font-size:16px;
-    height:100vh;
-    margin:0px;
-    padding:0px;
-    /* Padding to avoid the "unsafe" areas behind notches in the screen */
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    user-select: none;
+    background: #2c1810;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
-    text-transform:uppercase;
-    width:100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
-.app {
-    background-color: darkgreen;
+/* Estilos para juegos */
+.game-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 105, 30, 0.3));
+    z-index: -1;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: white;
+    position: relative;
+    min-height: 60px;
+}
+
+.btn-back {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-back:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+.game-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.game-logo {
+    height: 80px;
+    width: auto;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.score {
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+}
+
+/* Estilos específicos para Generala */
+.generala-game {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex: 1;
+    align-items: stretch;
+}
+
+.dice-section {
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dice-section h3 {
+    text-align: center;
+    color: #333;
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+}
+
+.dice-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 15px;
+    flex: 1;
+    min-height: 200px;
+    padding: 20px;
+}
+
+.dice {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #8B4513, #D2691E);
+    border: 2px solid #654321;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    margin: 8px 0;
+}
+
+.dice:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.dice.bloqueado {
+    background: linear-gradient(135deg, #654321, #8B4513);
+    border-color: #4a2c0f;
+    opacity: 0.8;
+}
+
+.dice-controls {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    margin-top: auto;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8B4513, #D2691E);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #A0522D, #CD853F);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 8px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tiros-info {
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 8px;
+    background: rgba(139, 69, 19, 0.1);
+    border-radius: 8px;
+}
+
+.scoreboard-section {
+    background: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.scoreboard-section h3 {
+    text-align: center;
+    color: #333;
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+}
+
+.scoreboard {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.player-column {
+    flex: 1;
+    min-width: 150px;
+}
+
+.player-column h4 {
+    text-align: center;
+    color: #333;
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    padding: 8px;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(210, 105, 30, 0.1));
+    border-radius: 8px;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    margin: 1px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.score-row:hover {
+    background: rgba(139, 69, 19, 0.1);
+    transform: scale(1.02);
+}
+
+.score-row.subtotal {
+    background: rgba(139, 69, 19, 0.2);
+    font-weight: bold;
+    cursor: default;
+}
+
+.score-row.bonus {
+    background: rgba(210, 105, 30, 0.2);
+    font-weight: bold;
+    cursor: default;
+}
+
+.score-row.total {
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 105, 30, 0.3));
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: default;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
     flex-wrap: wrap;
 }
 
-h1 {
-    text-align:center;
-}
-
-@media screen and (prefers-color-scheme: dark) {
-    body {
-        background-image:linear-gradient(to bottom, #03290e 0%, #1B1B1B 51%);
+/* Responsive */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 15px;
     }
-}
-
-.boton{
     
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .game-logo {
+        height: 80px;
+    }
+    
+    .dice {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        margin: 6px 0;
+    }
+    
+    .dice-container {
+        padding: 15px;
+        min-height: 180px;
+    }
+    
+    .dice-container {
+        gap: 10px;
+    }
+    
+    .scoreboard {
+        flex-direction: column;
+    }
+    
+    .player-column {
+        min-width: auto;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .generala-game {
+        flex-direction: column;
+    }
+    
+    .dice-section {
+        flex: none;
+        height: auto;
+    }
+    
+    .scoreboard-section {
+        height: auto;
+    }
 }
