@@ -119,20 +119,6 @@ body {
     font-size: 1rem;
 }
 
-.game-status {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    background: #4CAF50;
-    color: white;
-}
-
-.game-status:contains("En desarrollo") {
-    background: #FF9800;
-}
-
 .menu-footer {
     display: flex;
     gap: 15px;
