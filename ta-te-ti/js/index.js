@@ -8,13 +8,29 @@ let juego = {
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Ta-Te-Ti iniciado');
+    cargarPerfiles();
     empezarJuego();
     hacerTabla();
 });
 
+// Cargar perfiles de jugadores
+function cargarPerfiles() {
+    try {
+        const perfilesGuardados = localStorage.getItem('perfiles');
+        if (perfilesGuardados) {
+            window.perfiles = JSON.parse(perfilesGuardados);
+        } else {
+            window.perfiles = [];
+        }
+    } catch (error) {
+        console.log('Error al cargar perfiles:', error);
+        window.perfiles = [];
+    }
+}
 
 
-document.getElementById("turnos").innerHTML = juego.turnos;
+
+
 
 function empezarJuego() {
     juego = {
@@ -33,16 +49,46 @@ function tirarMoneda() {
 
 function hacerTabla() {
     const cont = document.querySelector("#ta-te-ti tbody");
+    
+    // Obtener nombres de jugadores
+    const jugador1 = window.perfiles[0] ? window.perfiles[0].nombre : "Jugador 1";
+    const jugador2 = window.perfiles[1] ? window.perfiles[1].nombre : "Jugador 2";
+    
+    // Mostrar turno con nombre y emoji
     const turnoEmoji = juego.turnos === 1 ? "☕" : "🍰";
-    document.getElementById("turnos").innerHTML = turnoEmoji;
-    document.getElementById("turnos-display").innerHTML = turnoEmoji;
+    const turnoNombre = juego.turnos === 1 ? jugador1 : jugador2;
+    
+    document.getElementById("turnos-display").innerHTML = turnoNombre;
+    
     for (let r = 0; r < 3; r++){
         for (let c = 0; c < 3; c++) {
             const celda = cont.querySelector("tr:nth-of-type(" + (r + 1) + ") td:nth-of-type(" + (c + 1) + ")");
             if (juego.tabla[r][c] === "☕") {
-                celda.innerHTML = '<img src="../img/cafe-ficha.png" alt="Café" class="ficha-img">';
+                // Usar avatar del jugador 1
+                let avatarJugador1 = "../img/avatar1.png"; // fallback
+                if (window.perfiles[0] && window.perfiles[0].foto) {
+                    // Convertir ruta relativa desde perfil a ruta desde ta-te-ti
+                    const fotoSrc = window.perfiles[0].foto;
+                    if (fotoSrc.includes("img/avatar")) {
+                        avatarJugador1 = "../" + fotoSrc;
+                    } else {
+                        avatarJugador1 = fotoSrc;
+                    }
+                }
+                celda.innerHTML = `<img src="${avatarJugador1}" alt="Avatar Jugador 1" class="ficha-img">`;
             } else if (juego.tabla[r][c] === "🍰") {
-                celda.innerHTML = '<img src="../img/cafe2.png" alt="Cafeparallevar" class="ficha-img">';
+                // Usar avatar del jugador 2
+                let avatarJugador2 = "../img/avatar2.png"; // fallback
+                if (window.perfiles[1] && window.perfiles[1].foto) {
+                    // Convertir ruta relativa desde perfil a ruta desde ta-te-ti
+                    const fotoSrc = window.perfiles[1].foto;
+                    if (fotoSrc.includes("img/avatar")) {
+                        avatarJugador2 = "../" + fotoSrc;
+                    } else {
+                        avatarJugador2 = fotoSrc;
+                    }
+                }
+                celda.innerHTML = `<img src="${avatarJugador2}" alt="Avatar Jugador 2" class="ficha-img">`;
             } else {
                 celda.innerHTML = "";
             }
@@ -57,18 +103,18 @@ function jugar(r, c) {
             const ficha = juego.turnos === 1 ? "☕" : "🍰";
             juego.tabla [r] [c] = ficha;
             
-            hacerTabla();
-            
             if (esTaTeTi(juego.tabla[r][c])) {
                 juego.ganador = juego.turnos;
                 juego.jugadas = 9;
+                hacerTabla();
                 setTimeout(() => terminado(), 500);
             } else{
                 juego.jugadas++;
+                juego.turnos = juego.turnos === 1 ? 2 : 1;
+                hacerTabla();
                 if(juego.jugadas === 9) {
                     setTimeout(() => terminado(), 500);
                 }
-                juego.turnos = juego.turnos === 1 ? 2 : 1; 
             }
         } 
     } else {
@@ -111,7 +157,10 @@ function terminado(){
     let msg = "Empate";
     if (juego.ganador !== 0) {
         const ganadorEmoji = juego.ganador === 1 ? "☕" : "🍰";
-        msg = `¡Ganó ${ganadorEmoji}!`;
+        const ganadorNombre = juego.ganador === 1 ? 
+            (window.perfiles[0] ? window.perfiles[0].nombre : "Jugador 1") : 
+            (window.perfiles[1] ? window.perfiles[1].nombre : "Jugador 2");
+        msg = `¡Ganó ${ganadorNombre}!`;
         crearConfeti();
     }
     document.querySelector("#juego-terminado .mensaje").innerHTML = msg;
