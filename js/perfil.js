@@ -1,90 +1,87 @@
 const cantJugadores = 2;
-
 let perfiles = [];
-let jugador = 0;
 
 // Inicializar cuando se carga la página
-document.addEventListener('DOMContentLoaded', cargarPerfil);
+document.addEventListener('DOMContentLoaded', cargarPerfiles);
 
-function cargarPerfil() {
-    document.getElementById("btn-guardar-perfil").addEventListener("click", guardarPerfil, false);
-
+function cargarPerfiles() {
     perfiles = Storage.cargar("perfiles") || [];
-    jugador = Number(new URLSearchParams (window.location.search).get("player"));
-
-    document.getElementById("jugador").innerHTML = jugador + 1;
-
-    if(perfiles[jugador]) {
-        document.getElementById("nombre").value = perfiles[jugador].nombre;
-        document.getElementById("apodo").value = perfiles[jugador].apodo;
-        document.getElementById("color").value = perfiles[jugador].color;
-        document.getElementById("foto").setAttribute("src", perfiles[jugador].foto);
+    
+    // Cargar datos del jugador 1
+    if (perfiles[0]) {
+        document.getElementById("nombre1").value = perfiles[0].nombre || "";
+        document.getElementById("apodo1").value = perfiles[0].apodo || "";
+        document.getElementById("color1").value = perfiles[0].color || "#8B4513";
+        document.getElementById("foto1").setAttribute("src", perfiles[0].foto || getDefaultImage());
+    }
+    
+    // Cargar datos del jugador 2
+    if (perfiles[1]) {
+        document.getElementById("nombre2").value = perfiles[1].nombre || "";
+        document.getElementById("apodo2").value = perfiles[1].apodo || "";
+        document.getElementById("color2").value = perfiles[1].color || "#D2691E";
+        document.getElementById("foto2").setAttribute("src", perfiles[1].foto || getDefaultImage());
     }
 }
 
-function guardarPerfil(e) {
-    //previene que se envie el formulario
-    e.preventDefault();
-    //Reseteo el estado de validación del formulario
-    ["nombre", "apodo", "color", "foto"]
-        .forEach(campo => document.getElementById(campo).classList.remove("notValid"));
-    //guardar los datos si el formulario es valido
-    if(validarForm()){
-        perfiles[jugador] = {
-            nombre: document.getElementById("nombre").value,
-            apodo: document.getElementById("apodo").value,
-            color: document.getElementById("color").value,
-            foto: document.getElementById("foto").getAttribute("src")
-        }
+function guardarPerfil(numeroJugador) {
+    // Reseteo el estado de validación del formulario
+    const campos = ["nombre", "apodo", "color", "foto"];
+    campos.forEach(campo => {
+        const elemento = document.getElementById(campo + numeroJugador);
+        if (elemento) elemento.classList.remove("notValid");
+    });
+    
+    // Guardar los datos si el formulario es válido
+    if (validarForm(numeroJugador)) {
+        const jugadorIndex = numeroJugador - 1;
+        
+        perfiles[jugadorIndex] = {
+            nombre: document.getElementById("nombre" + numeroJugador).value,
+            apodo: document.getElementById("apodo" + numeroJugador).value,
+            color: document.getElementById("color" + numeroJugador).value,
+            foto: document.getElementById("foto" + numeroJugador).getAttribute("src")
+        };
+        
         Storage.guardar("perfiles", perfiles);
-
-        if (perfiles.length < cantJugadores) {
-            window.location.href = "perfil.html?player=" + perfiles.length;
-        } else {
-            window.location.href = "menu.html";
-        }
+        
+        // Mostrar mensaje de éxito
+        mostrarMensaje(`Perfil del Jugador ${numeroJugador} guardado exitosamente!`);
     }
 }
 
-function validarForm( ){
-    let campos = ["nombre", "apodo", "color"];
-
-    for (const campo of campos){
-        const el = document.getElementById(campo);
-        const valor = el.value;
-
-        if (valor. length < 3 || !esValido (campo, valor)) {
-            el.classList.add ("notValid");
-            el.focus();
+function validarForm(numeroJugador) {
+    const campos = ["nombre", "apodo", "color"];
+    
+    for (const campo of campos) {
+        const elemento = document.getElementById(campo + numeroJugador);
+        const valor = elemento.value;
+        
+        if (valor.length < 3) {
+            elemento.classList.add("notValid");
+            elemento.focus();
+            mostrarMensaje(`El campo ${campo} debe tener al menos 3 caracteres`, "error");
             return false;
-            } else {
-                el.classList.remove("notValid");
-            }
+        } else {
+            elemento.classList.remove("notValid");
+        }
     }
-
-    const img = document.getElementById("foto");
-    const defaultImage = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSIyMCIgZmlsbD0iI2NjYyIvPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iI2NjYyIvPgo8L3N2Zz4=";
-    if(img.getAttribute("src") === defaultImage){
-        //todavía no se seleccionó la foto y no es valido
+    
+    const img = document.getElementById("foto" + numeroJugador);
+    const defaultImage = getDefaultImage();
+    
+    if (img.getAttribute("src") === defaultImage) {
         img.classList.add("notValid");
-        img.focus();
+        mostrarMensaje("Debes seleccionar una foto de perfil", "error");
         return false;
     } else {
         img.classList.remove("notValid");
     }
-
+    
     return true;
 }
 
-function esValido(propiedad, valor){
-    let found = false;
-    for (let i = 0; !found && i < perfiles.length; i++){
-        found = perfiles[i][propiedad] === valor;
-    }
-    return !found;
-}
-
-function sacarFoto(){
+function sacarFoto(numeroJugador) {
     // Usar input file para seleccionar imagen
     const input = document.createElement('input');
     input.type = 'file';
@@ -94,10 +91,61 @@ function sacarFoto(){
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById("foto").setAttribute("src", e.target.result);
+                document.getElementById("foto" + numeroJugador).setAttribute("src", e.target.result);
             };
             reader.readAsDataURL(file);
         }
     };
     input.click();
 }
+
+function getDefaultImage() {
+    return "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSIyMCIgZmlsbD0iI2NjYyIvPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMTAwIiByPSI0MCIgZmlsbD0iI2NjYyIvPgo8L3N2Zz4=";
+}
+
+function mostrarMensaje(mensaje, tipo = "success") {
+    // Crear elemento de mensaje
+    const mensajeElement = document.createElement('div');
+    mensajeElement.className = `mensaje ${tipo}`;
+    mensajeElement.textContent = mensaje;
+    mensajeElement.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+        background: ${tipo === "error" ? "#e74c3c" : "#27ae60"};
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    
+    document.body.appendChild(mensajeElement);
+    
+    // Remover mensaje después de 3 segundos
+    setTimeout(() => {
+        mensajeElement.style.animation = "slideOut 0.3s ease";
+        setTimeout(() => {
+            if (mensajeElement.parentNode) {
+                mensajeElement.parentNode.removeChild(mensajeElement);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Agregar estilos CSS para las animaciones de mensajes
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+    }
+`;
+document.head.appendChild(style);

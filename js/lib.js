@@ -1,7 +1,12 @@
 const Storage = {
     cargar: key => {
         try {
-            return JSON.parse(localStorage.getItem(key));
+            console.log("Intentando cargar:", key);
+            const item = localStorage.getItem(key);
+            console.log("Item raw:", item);
+            const parsed = JSON.parse(item);
+            console.log("Item parsed:", parsed);
+            return parsed;
         } catch (x) {
             console.error("No se pudo leer el item" + key + ". Error: " + x);
             return null;

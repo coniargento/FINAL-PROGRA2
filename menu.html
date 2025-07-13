@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
-    <title>Cafetería Arcade - Menú Principal</title>
+    <title>kofi games</title>
 </head>
 <body>
     <div class="menu-container">
@@ -14,49 +14,25 @@
         </header>
 
         <nav class="games-grid">
-            <div class="game-card" onclick="window.location.href='ta-te-ti/index.html'">
-                <h3 class="game-title">Ta-Te-Ti</h3>
-                <div class="game-preview tateti-preview">
-                    <div class="preview-grid">
-                        <div class="preview-cell">☕</div>
-                        <div class="preview-cell">🍰</div>
-                        <div class="preview-cell"></div>
-                        <div class="preview-cell">🍰</div>
-                        <div class="preview-cell">☕</div>
-                        <div class="preview-cell"></div>
-                        <div class="preview-cell"></div>
-                        <div class="preview-cell"></div>
-                        <div class="preview-cell">☕</div>
-                    </div>
+            <div class="game-card tateti-card" onclick="window.location.href='ta-te-ti/index.html'">
+                <div class="card-background tateti-bg"></div>
+                <div class="card-overlay">
+                    <img src="img/tateti.png" alt="Ta-Te-Ti" class="game-logo">
                 </div>
-                <p>Clásico juego de tres en línea</p>
             </div>
 
-            <div class="game-card" onclick="window.location.href='generala/index.html'">
-                <h3 class="game-title">Generala</h3>
-                <div class="game-preview generala-preview">
-                    <div class="dice-preview">
-                        <div class="dice">⚀</div>
-                        <div class="dice">⚁</div>
-                        <div class="dice">⚂</div>
-                        <div class="dice">⚃</div>
-                        <div class="dice">⚄</div>
-                    </div>
+            <div class="game-card generala-card" onclick="window.location.href='generala/index.html'">
+                <div class="card-background generala-bg"></div>
+                <div class="card-overlay">
+                    <img src="img/generala.png" alt="Generala" class="game-logo">
                 </div>
-                <p>Juego de dados estratégico</p>
             </div>
 
-            <div class="game-card" onclick="window.location.href='snake/index.html'">
-                <h3 class="game-title">Snake</h3>
-                <div class="game-preview snake-preview">
-                    <div class="snake-canvas">
-                        <div class="snake-segment head">🐍</div>
-                        <div class="snake-segment">🟢</div>
-                        <div class="snake-segment">🟢</div>
-                        <div class="food">🍎</div>
-                    </div>
+            <div class="game-card snake-card" onclick="window.location.href='snake/index.html'">
+                <div class="card-background snake-bg"></div>
+                <div class="card-overlay">
+                    <div class="snake-logo-text">🐍 SNAKE</div>
                 </div>
-                <p>Controla la serpiente hambrienta</p>
             </div>
         </nav>
 
@@ -74,20 +50,6 @@
                 window.location.href = 'index.html';
             }
         }
-
-        // Cargar perfiles para mostrar información
-        document.addEventListener('DOMContentLoaded', function() {
-            const perfiles = Storage.cargar("perfiles");
-            if (perfiles && perfiles.length > 0) {
-                const playerInfo = document.createElement('div');
-                playerInfo.className = 'player-info';
-                playerInfo.innerHTML = `
-                    <p>👥 Jugadores: ${perfiles.length}/2</p>
-                    <p>🎯 ${perfiles[0]?.nombre || 'Jugador 1'} vs ${perfiles[1]?.nombre || 'Jugador 2'}</p>
-                `;
-                document.querySelector('.menu-header').appendChild(playerInfo);
-            }
-        });
     </script>
 </body>
 </html>

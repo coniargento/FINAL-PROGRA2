@@ -362,3 +362,8 @@ function mostrarReglas() {
     
     alert(reglas);
 }
+
+// Función para volver al menú
+function volverAlMenu() {
+    window.location.href = '../menu.html';
+}

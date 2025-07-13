@@ -2,12 +2,15 @@ const cantJugadores = 2;
 
 // Función para inicializar la aplicación
 function inicializarApp() {
+    console.log("Inicializando aplicación...");
     let perfiles = Storage.cargar("perfiles");
-    if (perfiles === null){
-        window.location.href = "perfil.html?player=0";
-    } else if (perfiles.length < cantJugadores) {
-        window.location.href = "perfil.html?player=" + perfiles.length;
+    console.log("Perfiles cargados:", perfiles);
+    
+    if (perfiles === null || perfiles.length < cantJugadores) {
+        console.log("Redirigiendo a perfil.html");
+        window.location.href = "perfil.html";
     } else {
+        console.log("Redirigiendo a menu.html");
         window.location.href = "menu.html";
     }
 }
