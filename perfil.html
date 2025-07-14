@@ -9,7 +9,11 @@
 <body>
     <div class="profile-container">
         <header class="profile-header">
-            <button class="btn-back" onclick="window.location.href='menu.html'">←</button>
+            <div class="header-buttons">
+                <button class="btn-back" onclick="window.location.href='menu.html'">← menú</button>
+            </div>
+            <img src="img/perfil.png" alt="Perfil Logo" class="game-logo">
+            <div class="header-buttons"></div>
         </header>
 
         <div class="profiles-grid">
@@ -28,15 +32,21 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="color1">Café favorito:</label>
-                        <input id="color1" type="color" value="#8B4513">
+                        <label for="cafe1">Café favorito:</label>
+                        <select id="cafe1" name="cafe1">
+                            <option value="espresso">Espresso</option>
+                            <option value="latte">Latte</option>
+                            <option value="capuccino">Flat white</option>
+                            <option value="americano">Americano</option>
+                            <option value="mocca">Vainilla latte</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
                         <label for="foto1">Avatar de perfil:</label>
                         <div class="avatar-container">
-                            <img id="foto1" src="img/avatar1.png" alt="Avatar seleccionado" class="avatar-selected">
-                            <div class="avatar-options">
+                            <img id="foto1" src="img/avatar1.png" alt="Avatar seleccionado" class="avatar-selected" onclick="document.getElementById('avatar-options-1').style.display = (document.getElementById('avatar-options-1').style.display === 'flex' ? 'none' : 'flex')">
+                            <div id="avatar-options-1" class="avatar-options" style="display:none;">
                                 <img src="img/avatar1.png" alt="Avatar 1" class="avatar-option" onclick="seleccionarAvatar(1, 1)">
                                 <img src="img/avatar2.png" alt="Avatar 2" class="avatar-option" onclick="seleccionarAvatar(1, 2)">
                                 <img src="img/avatar3.png" alt="Avatar 3" class="avatar-option" onclick="seleccionarAvatar(1, 3)">
@@ -64,15 +74,21 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="color2">Café favorito:</label>
-                        <input id="color2" type="color" value="#D2691E">
+                        <label for="cafe2">Café favorito:</label>
+                        <select id="cafe2" name="cafe2">
+                            <option value="espresso">Espresso</option>
+                            <option value="latte">Latte</option>
+                            <option value="capuccino">Capuccino</option>
+                            <option value="americano">Americano</option>
+                            <option value="mocca">Mocca</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
                         <label for="foto2">Avatar de perfil:</label>
                         <div class="avatar-container">
-                            <img id="foto2" src="img/avatar2.png" alt="Avatar seleccionado" class="avatar-selected">
-                            <div class="avatar-options">
+                            <img id="foto2" src="img/avatar2.png" alt="Avatar seleccionado" class="avatar-selected" onclick="document.getElementById('avatar-options-2').style.display = (document.getElementById('avatar-options-2').style.display === 'flex' ? 'none' : 'flex')">
+                            <div id="avatar-options-2" class="avatar-options" style="display:none;">
                                 <img src="img/avatar1.png" alt="Avatar 1" class="avatar-option" onclick="seleccionarAvatar(2, 1)">
                                 <img src="img/avatar2.png" alt="Avatar 2" class="avatar-option" onclick="seleccionarAvatar(2, 2)">
                                 <img src="img/avatar3.png" alt="Avatar 3" class="avatar-option" onclick="seleccionarAvatar(2, 3)">

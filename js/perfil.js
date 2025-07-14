@@ -28,50 +28,50 @@ function cargarPerfiles() {
 
 function guardarPerfil(numeroJugador) {
     // Reseteo el estado de validación del formulario
-    const campos = ["nombre", "apodo", "color", "foto"];
+    const campos = ["nombre", "apodo", "cafe", "foto"];
     campos.forEach(campo => {
         const elemento = document.getElementById(campo + numeroJugador);
         if (elemento) elemento.classList.remove("notValid");
     });
-    
+
     // Guardar los datos si el formulario es válido
     if (validarForm(numeroJugador)) {
         const jugadorIndex = numeroJugador - 1;
-        
+
         perfiles[jugadorIndex] = {
             nombre: document.getElementById("nombre" + numeroJugador).value,
             apodo: document.getElementById("apodo" + numeroJugador).value,
-            color: document.getElementById("color" + numeroJugador).value,
+            cafe: document.getElementById("cafe" + numeroJugador).value,
             foto: document.getElementById("foto" + numeroJugador).getAttribute("src"),
             avatarIndex: getAvatarIndex(numeroJugador)
         };
-        
+
         Storage.guardar("perfiles", perfiles);
-        
+
         // Mostrar mensaje de éxito
         mostrarMensaje(`Perfil del Jugador ${numeroJugador} guardado exitosamente!`);
     }
 }
 
 function validarForm(numeroJugador) {
-    const campos = ["nombre", "apodo", "color"];
-    
+    const campos = ["nombre", "apodo", "cafe"];
+
     for (const campo of campos) {
         const elemento = document.getElementById(campo + numeroJugador);
         const valor = elemento.value;
-        
-        if (valor.length < 3) {
+
+        if (!valor || valor.length < 3) {
             elemento.classList.add("notValid");
             elemento.focus();
-            mostrarMensaje(`El campo ${campo} debe tener al menos 3 caracteres`, "error");
+            mostrarMensaje(`El campo ${campo} debe tener al menos 3 caracteres o estar seleccionado`, "error");
             return false;
         } else {
             elemento.classList.remove("notValid");
         }
     }
-    
+
     const img = document.getElementById("foto" + numeroJugador);
-    
+
     if (!img.getAttribute("src") || img.getAttribute("src").includes("data:image/svg+xml")) {
         img.classList.add("notValid");
         mostrarMensaje("Debes seleccionar un avatar de perfil", "error");
@@ -79,7 +79,7 @@ function validarForm(numeroJugador) {
     } else {
         img.classList.remove("notValid");
     }
-    
+
     return true;
 }
 
