@@ -367,7 +367,7 @@ function nuevoJuego() {
 
 // Mostrar reglas
 function mostrarReglas() {
-    const reglas = `🎲 REGLAS DE LA GENERALA\n\n📊 PUNTUACIONES:\n• Ases (1): Suma de todos los 1\n• Doses (2): Suma de todos los 2\n• Treses (3): Suma de todos los 3\n• Cuatros (4): Suma de todos los 4\n• Cincos (5): Suma de todos los 5\n• Seis (6): Suma de todos los 6\n\n🎯 COMBINACIONES:\n• Poker: 4 dados iguales (40 puntos)\n• Full: 3 de un número + 2 de otro (30 puntos)\n• Escalera: 5 números consecutivos (20 puntos)\n• Generala: 5 dados iguales (50 puntos)\n• Doble Generala: 5 dados iguales (100 puntos)\n\n🎮 CÓMO JUGAR:\n1. Tira los dados (máximo 3 veces)\n2. Bloquea los dados que quieras conservar\n3. Anota en una categoría disponible\n4. Cambia el turno\n5. ¡El que más puntos tenga gana!`;
+    const reglas = `PUNTUACIONES:\n• 1) Suma de todos los 1\n• 2) Suma de todos los 2\n• 3) Suma de todos los 3\n• 4) Suma de todos los 4\n• 5) Suma de todos los 5\n• 6) Suma de todos los 6\n\n COMBINACIONES:\n• Poker: 4 dados iguales (40 puntos)\n• Full: 3 de un número + 2 de otro (30 puntos)\n• Escalera: 5 números consecutivos (20 puntos)\n• Generala: 5 dados iguales (50 puntos)\n• Doble Generala: 5 dados iguales (100 puntos)\n\nCÓMO JUGAR:\n1. Tira los dados (máximo 3 veces)\n2. Bloquea los dados que quieras conservar\n3. Anota en una categoría disponible\n4. Cambia el turno\n5. ¡El que más puntos tenga gana!`;
     document.getElementById('texto-reglas').textContent = reglas;
     document.getElementById('modal-reglas').classList.remove('nodisp');
 }
