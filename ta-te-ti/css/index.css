@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -7,8 +9,14 @@ body {
     -webkit-text-size-adjust: none;
     -webkit-user-select: none;
     user-select: none;
-    background: #2c1810;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #2c1810 !important;
+    background-image: url('../../img/fondocafe.jpg') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    position: relative;
+    font-family: 'Montserrat', Arial, sans-serif;
     font-size: 16px;
     height: 100vh;
     margin: 0px;
@@ -25,20 +33,23 @@ body {
     flex-direction: column;
     padding: 0 10px 10px 10px;
     box-sizing: border-box;
-    background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
+    background: none !important;
     position: relative;
+    z-index: 1;
     overflow: hidden;
 }
 
 .game-container::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 105, 30, 0.3));
-    z-index: -1;
+    z-index: 0;
+    pointer-events: none;
+    background: rgba(44,24,16,0.45);
+    backdrop-filter: blur(8px);
 }
 
 .game-container .overlay {
@@ -180,6 +191,11 @@ body {
     transform: scale(1.05);
 }
 
+button, .btn-primary, .btn-secondary {
+    font-family: 'Montserrat', Arial, sans-serif !important;
+    /* No sobrescribo color ni background ni border */
+}
+
 /* Estilos específicos para Ta-Te-Ti */
 .tateti-main {
     display: flex;
@@ -190,29 +206,23 @@ body {
 }
 
 .turno-info {
-    background: rgba(255,255,255,0.95);
-    padding: 15px 30px;
-    border-radius: 25px;
+    margin-top: 120px;
+    background: none;
+    padding: 0;
+    border-radius: 0;
     font-size: 1.3rem;
     font-weight: bold;
-    color: #333;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
+    color: #fe8d98;
+    box-shadow: none;
+    backdrop-filter: none;
+    border: none;
     text-align: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .turno-info::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: shine 2s infinite;
+    content: none;
 }
 
 @keyframes shine {
@@ -221,9 +231,10 @@ body {
 }
 
 .tateti-table {
+    margin-top: 10px;
     background: rgba(255,255,255,0.95);
     border-radius: 20px;
-    padding: 20px;
+    padding: 10px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.2);
@@ -456,11 +467,40 @@ body {
 }
 
 .modal-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 25px;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+
+.modal-buttons .btn-primary,
+.modal-buttons .btn-secondary {
+    width: 160px !important;
+    min-width: 0 !important;
+    max-width: 160px !important;
+    padding: 12px 0 !important;
+    font-size: 1rem !important;
+    border-radius: 20px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    font-weight: 600 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 1.1 !important;
+    overflow-wrap: break-word !important;
+    display: inline-block !important;
+    background: linear-gradient(135deg, #8B4513, #D2691E) !important;
+    color: white !important;
+    border: 2px solid #654321 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+.modal-buttons .btn-primary:hover,
+.modal-buttons .btn-secondary:hover {
+    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
+    color: white !important;
 }
 
 @keyframes fadeIn {

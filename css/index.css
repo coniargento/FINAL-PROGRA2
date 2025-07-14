@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 body {
     -webkit-touch-callout: none;
     -webkit-text-size-adjust: none;
     background: linear-gradient(135deg, #8B4513 0%, #eab0d8 100%) !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     font-size: 16px;
     height: 100vh;
     margin: 0px;
@@ -13,6 +14,11 @@ body {
     overflow-x: hidden;
     margin-top: 0 !important;
     padding-top: 0 !important;
+}
+
+button, .btn-primary, .btn-secondary {
+    font-family: 'Montserrat', Arial, sans-serif !important;
+    /* No sobrescribo color ni background ni border */
 }
 
 /* Menu Principal */
@@ -50,13 +56,11 @@ body {
 .logo {
     height: 350px;
     margin-top: -40px;
-    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.4));
-    transition: all 0.3s ease;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.4));  /* Sin animación */
 }
 
 .logo:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 12px 40px rgba(0,0,0,0.5));
+    /* Sin efecto de zoom */
 }
 
 .menu-title {
@@ -153,7 +157,8 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(8px) brightness(0.7);
+    filter: blur(8px) brightness(0.2) !important;
+    background-color: rgba(211, 143, 101, 0.35) !important;
     z-index: 1;
 }
 
@@ -240,9 +245,9 @@ body {
 }
 
 .btn-secondary {
-    background: rgba(255,255,255,0.2);
-    color: white;
-    border: 2px solid rgba(255,255,255,0.3);
+    background: rgba(218, 132, 70, 0.2) !important;
+    color: white !important;
+    border: 2px solid rgba(255,255,255,0.3) !important;
     padding: 12px 24px;
     border-radius: 25px;
     cursor: pointer;
@@ -253,8 +258,8 @@ body {
 }
 
 .btn-secondary:hover {
-    background: rgba(255,255,255,0.3);
-    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.3) !important;
+    border-color: rgba(255,255,255,0.5) !important;
     transform: scale(1.05);
 }
 
@@ -482,9 +487,9 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #8B4513, #D2691E);
-    color: white;
-    border: 2px solid #654321;
+    background: linear-gradient(135deg, #8B4513, #D2691E) !important;
+    color: white !important;
+    border: 2px solid #654321 !important;
     padding: 8px 12px;
     border-radius: 15px;
     cursor: pointer;
@@ -499,7 +504,7 @@ body {
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, #A0522D, #CD853F);
+    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
     transform: scale(1.05);
 }
 
@@ -707,9 +712,9 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #8B4513, #D2691E);
-    color: white;
-    border: 2px solid #654321;
+    background: linear-gradient(135deg, #8B4513, #D2691E) !important;
+    color: white !important;
+    border: 2px solid #654321 !important;
     padding: 8px 12px;
     border-radius: 15px;
     cursor: pointer;
@@ -724,7 +729,7 @@ body {
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, #A0522D, #CD853F);
+    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
     transform: scale(1.05);
 }
 
@@ -1591,4 +1596,21 @@ img.notValid {
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
+}
+
+.games-grid .game-logo {
+    display: block !important;
+    margin: auto !important;
+    position: static !important;
+    left: unset !important;
+    top: unset !important;
+    transform: none !important;
+    height: 400px !important;
+    width: 400px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.8)) !important;
+}
+
+.game-logo {
+    top: 60%;
 }

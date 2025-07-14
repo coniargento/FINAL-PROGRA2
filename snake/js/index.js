@@ -9,14 +9,17 @@ let gamePaused = false;
 let score = 0;
 let gameSpeed = 150;
 let gameLoop;
+let scoreEffectTimeout;
+let scoreEffectValue = 0;
 
 // Configuración del juego
 const gridSize = 40;
-const canvasSize = 600;
+const canvasWidth = 1400;
+const canvasHeight = 800;
 
 // Colores
 const colors = {
-    snake: '#D4C4A8',
+    snake: '#fe8d98',
     snakeHead: '#8B7355',
     food: '#654321',
     background: '#F4F1E8',
@@ -58,8 +61,8 @@ function initGame() {
 function generateFood() {
     do {
         food = {
-            x: Math.floor(Math.random() * (canvasSize / gridSize)),
-            y: Math.floor(Math.random() * (canvasSize / gridSize))
+            x: Math.floor(Math.random() * (canvasWidth / gridSize)),
+            y: Math.floor(Math.random() * (canvasHeight / gridSize))
         };
     } while (snake.some(segment => segment.x === food.x && segment.y === food.y));
 }
@@ -68,7 +71,7 @@ function generateFood() {
 function drawGame() {
     // Limpiar canvas
     ctx.fillStyle = colors.background;
-    ctx.fillRect(0, 0, canvasSize, canvasSize);
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     
     // Dibujar grid
     drawGrid();
@@ -85,23 +88,24 @@ function drawGrid() {
     ctx.strokeStyle = colors.grid;
     ctx.lineWidth = 1;
     
-    for (let i = 0; i <= canvasSize; i += gridSize) {
+    for (let i = 0; i <= canvasWidth; i += gridSize) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvasSize);
+        ctx.lineTo(i, canvasHeight);
         ctx.stroke();
-        
+    }
+    for (let i = 0; i <= canvasHeight; i += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, i);
-        ctx.lineTo(canvasSize, i);
+        ctx.lineTo(canvasWidth, i);
         ctx.stroke();
     }
 }
 
 // Dibujar serpiente
 function drawSnake() {
-    snake.forEach((segment, index) => {
-        ctx.fillStyle = index === 0 ? colors.snakeHead : colors.snake;
+    snake.forEach((segment) => {
+        ctx.fillStyle = colors.snake;
         ctx.fillRect(
             segment.x * gridSize + 1,
             segment.y * gridSize + 1,
@@ -166,7 +170,7 @@ function moveSnake() {
     // Verificar si come
     if (head.x === food.x && head.y === food.y) {
         score += 10;
-        document.getElementById('score').textContent = score;
+        showScoreEffect('+10');
         generateFood();
         
         // Aumentar velocidad
@@ -186,8 +190,8 @@ function moveSnake() {
 // Verificar colisiones
 function checkCollision(head) {
     // Colisión con bordes
-    if (head.x < 0 || head.x >= canvasSize / gridSize || 
-        head.y < 0 || head.y >= canvasSize / gridSize) {
+    if (head.x < 0 || head.x >= canvasWidth / gridSize || 
+        head.y < 0 || head.y >= canvasHeight / gridSize) {
         return true;
     }
     
@@ -242,8 +246,6 @@ function startGame() {
     direction = 'right';
     nextDirection = 'right';
     
-    document.getElementById('score').textContent = '0';
-    
     // Reinicializar serpiente
     snake = [
         {x: 6, y: 10},
@@ -267,11 +269,11 @@ function pauseGame() {
         clearInterval(gameLoop);
         // Mostrar mensaje de pausa
         ctx.fillStyle = 'rgba(0,0,0,0.7)';
-        ctx.fillRect(0, 0, canvasSize, canvasSize);
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
         ctx.fillStyle = 'white';
         ctx.font = '24px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('PAUSADO', canvasSize/2, canvasSize/2);
+        ctx.fillText('PAUSADO', canvasWidth/2, canvasHeight/2);
     } else {
         gameLoop = setInterval(moveSnake, gameSpeed);
     }
@@ -284,17 +286,46 @@ function gameOver() {
     
     // Mostrar pantalla de game over
     ctx.fillStyle = 'rgba(0,0,0,0.8)';
-    ctx.fillRect(0, 0, canvasSize, canvasSize);
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     
     ctx.fillStyle = 'white';
     ctx.font = '32px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('GAME OVER', canvasSize/2, canvasSize/2 - 20);
+    ctx.fillText('GAME OVER', canvasWidth/2, canvasHeight/2 - 20);
     
     ctx.font = '20px Arial';
-    ctx.fillText(`Puntuación: ${score}`, canvasSize/2, canvasSize/2 + 20);
-    ctx.fillText('Presiona "Jugar" para reiniciar', canvasSize/2, canvasSize/2 + 50);
+    ctx.fillText(`Puntuación: ${score}`, canvasWidth/2, canvasHeight/2 + 20);
+    ctx.fillText('Presiona "Jugar" para reiniciar', canvasWidth/2, canvasHeight/2 + 50);
 }
 
 // Inicializar cuando se carga la página
 document.addEventListener('DOMContentLoaded', initGame); 
+
+function showScoreEffect(text) {
+    scoreEffectValue = text;
+    const effect = document.createElement('div');
+    effect.textContent = text;
+    effect.className = 'score-effect';
+    effect.style.position = 'fixed';
+    effect.style.right = '40px';
+    effect.style.top = '50%';
+    effect.style.transform = 'translateY(-50%)';
+    effect.style.fontSize = '2.5rem';
+    effect.style.fontWeight = 'bold';
+    effect.style.color = '#2c1810';
+    effect.style.background = 'rgba(255,255,255,0.85)';
+    effect.style.borderRadius = '20px';
+    effect.style.padding = '12px 32px';
+    effect.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)';
+    effect.style.zIndex = '9999';
+    effect.style.opacity = '1';
+    effect.style.transition = 'opacity 0.8s, top 0.8s';
+    document.body.appendChild(effect);
+    setTimeout(() => {
+        effect.style.opacity = '0';
+        effect.style.top = '40%';
+    }, 500);
+    setTimeout(() => {
+        if (effect.parentNode) effect.parentNode.removeChild(effect);
+    }, 1300);
+} 

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -13,7 +15,7 @@ body {
     background-position: center center !important;
     background-attachment: fixed !important;
     background-size: cover !important;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Montserrat', Arial, sans-serif;
     font-size: 16px;
     height: 100vh;
     margin: 0px;
@@ -21,6 +23,11 @@ body {
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
     width: 100%;
     overflow-x: hidden;
+}
+
+button, .btn-primary, .btn-secondary {
+    font-family: 'Montserrat', Arial, sans-serif !important;
+    /* No sobrescribo color ni background ni border */
 }
 
 /* Estilos para juegos */
