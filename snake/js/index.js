@@ -11,17 +11,26 @@ let gameSpeed = 150;
 let gameLoop;
 
 // Configuración del juego
-const gridSize = 20;
-const canvasSize = 400;
+const gridSize = 40;
+const canvasSize = 600;
 
 // Colores
 const colors = {
-    snake: '#4CAF50',
-    snakeHead: '#2E7D32',
-    food: '#FF5722',
-    background: '#F5F5F5',
-    grid: '#E0E0E0'
+    snake: '#D4C4A8',
+    snakeHead: '#8B7355',
+    food: '#654321',
+    background: '#F4F1E8',
+    grid: '#E8E0D0'
 };
+
+// Imagen de grano de café para la comida
+const cafeImg = new Image();
+cafeImg.src = '../img/cafe-ficha.png';
+let cafeImgLoaded = false;
+cafeImg.onload = function() {
+    cafeImgLoaded = true;
+    drawGame(); // Redibuja el juego cuando la imagen esté lista
+}
 
 // Inicializar el juego
 function initGame() {
@@ -104,13 +113,29 @@ function drawSnake() {
 
 // Dibujar comida
 function drawFood() {
-    ctx.fillStyle = colors.food;
-    ctx.fillRect(
-        food.x * gridSize + 2,
-        food.y * gridSize + 2,
-        gridSize - 4,
-        gridSize - 4
-    );
+    if (cafeImgLoaded) {
+        const size = gridSize * 0.9;
+        const offset = (gridSize - size) / 2;
+        ctx.drawImage(
+            cafeImg,
+            food.x * gridSize + offset,
+            food.y * gridSize + offset,
+            size,
+            size
+        );
+    } else {
+        // Si la imagen no está lista, dibujar círculo marrón
+        ctx.fillStyle = colors.food;
+        ctx.beginPath();
+        ctx.arc(
+            food.x * gridSize + gridSize / 2,
+            food.y * gridSize + gridSize / 2,
+            gridSize / 3,
+            0,
+            2 * Math.PI
+        );
+        ctx.fill();
+    }
 }
 
 // Mover serpiente

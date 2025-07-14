@@ -6,35 +6,27 @@
     <link rel="stylesheet" href="../css/index.css">
     <title>Snake - Cafetería Arcade</title>
 </head>
-<body>
+<body class="snake-game">
     <div class="game-container">
         <header class="game-header">
-            <button class="btn-back" onclick="window.location.href='../menu.html'">← Volver</button>
-            <h1>🍰 Snake</h1>
-            <div class="score">Puntos: <span id="score">0</span></div>
+            <div class="header-buttons">
+                <button class="btn-back" onclick="window.location.href='../menu.html'">←</button>
+            </div>
+            <img src="../img/snake-logo.png" alt="Snake Logo" class="game-logo">
+            <div class="header-buttons">
+                <button class="btn-primary" onclick="startGame()">Nuevo Juego</button>
+                <button class="btn-primary" onclick="pauseGame()">Pausar</button>
+            </div>
         </header>
 
-        <div class="game-area">
-            <canvas id="gameCanvas" width="400" height="400"></canvas>
-        </div>
-
-        <div class="game-controls">
-            <div class="control-row">
-                <button class="control-btn" onclick="changeDirection('up')">↑</button>
-            </div>
-            <div class="control-row">
-                <button class="control-btn" onclick="changeDirection('left')">←</button>
-                <button class="control-btn" onclick="changeDirection('right')">→</button>
-            </div>
-            <div class="control-row">
-                <button class="control-btn" onclick="changeDirection('down')">↓</button>
+        <div class="game-area-flex" style="display: flex; align-items: center; justify-content: center; gap: 32px; min-height: 80vh;">
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+            <div class="score-panel" style="min-width:120px; text-align:center; font-size: 1.3rem; font-weight: bold; color: #2c1810; background: #f4f1e8; border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 16px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                ☕<br>Puntaje:<br><span id="score" style="font-size:2.2rem; margin-top:8px;">0</span>
             </div>
         </div>
 
-        <div class="game-info">
-            <button class="btn-primary" onclick="startGame()">Jugar</button>
-            <button class="btn-secondary" onclick="pauseGame()">Pausar</button>
-        </div>
+        <!-- Eliminar la sección de controles de dirección -->
     </div>
 
     <script src="../js/lib.js"></script>

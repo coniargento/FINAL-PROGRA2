@@ -11,41 +11,41 @@
             <div class="game-container">
         <div class="overlay"></div>
         <header class="game-header">
-                <button class="btn-back" onclick="window.location.href='../menu.html'">← Volver</button>
-                <img src="../img/tateti.png" alt="Ta-Te-Ti Logo" class="game-logo">
-            </header>
-
-            <div class="game-area">
-                <div id="main" class="tateti-main">
-                    <div class="turno-info">Turno de: <span id="turnos-display"></span></div>
-                    <table id="ta-te-ti" class="tateti-table">
-                        <tbody>
-                            <tr>
-                                <td onclick="jugar(0,0)"></td>
-                                <td onclick="jugar(0,1)"></td>
-                                <td onclick="jugar(0,2)"></td>
-                            </tr>
-                            <tr>
-                                <td onclick="jugar(1,0)"></td>
-                                <td onclick="jugar(1,1)"></td>
-                                <td onclick="jugar(1,2)"></td>
-                            </tr>
-                            <tr>
-                                <td onclick="jugar(2,0)"></td>
-                                <td onclick="jugar(2,1)"></td>
-                                <td onclick="jugar(2,2)"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="header-buttons">
+                <button class="btn-back" onclick="window.location.href='../menu.html'">←</button>
             </div>
-
-            <div class="game-info">
+            <img src="../img/tateti.png" alt="Ta-Te-Ti Logo" class="game-logo">
+            <div class="header-buttons">
                 <button class="btn-primary" onclick="empezarJuego()">Nuevo Juego</button>
-                <button class="btn-secondary" onclick="mostrarReglas()">Reglas</button>
+                <button class="btn-primary" onclick="mostrarReglas()">Reglas</button>
+            </div>
+        </header>
+
+        <div class="game-area">
+            <div id="main" class="tateti-main">
+                <div class="turno-info">Turno de: <span id="turnos-display"></span></div>
+                <table id="ta-te-ti" class="tateti-table">
+                    <tbody>
+                        <tr>
+                            <td onclick="jugar(0,0)"></td>
+                            <td onclick="jugar(0,1)"></td>
+                            <td onclick="jugar(0,2)"></td>
+                        </tr>
+                        <tr>
+                            <td onclick="jugar(1,0)"></td>
+                            <td onclick="jugar(1,1)"></td>
+                            <td onclick="jugar(1,2)"></td>
+                        </tr>
+                        <tr>
+                            <td onclick="jugar(2,0)"></td>
+                            <td onclick="jugar(2,1)"></td>
+                            <td onclick="jugar(2,2)"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        
+
         <!-- Popup Modal para fin de juego -->
         <div id="game-over-modal" class="modal nodisp">
             <div class="modal-content">

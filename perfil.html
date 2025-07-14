@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
-    <title>Perfil - Cafetería Arcade</title>
+    <title>Perfil - kofigames</title>
 </head>
 <body>
     <div class="profile-container">
         <header class="profile-header">
-            <button class="btn-back" onclick="window.location.href='menu.html'">← Volver</button>
+            <button class="btn-back" onclick="window.location.href='menu.html'">←</button>
         </header>
 
         <div class="profiles-grid">
             <!-- Perfil Jugador 1 -->
             <div class="profile-form">
-                <h2>☕ Jugador 1</h2>
+                <h2>Jugador 1</h2>
                 <form id="form-jugador1">
                     <div class="form-group">
                         <label for="nombre1">Nombre:</label>
@@ -35,8 +35,8 @@
                     <div class="form-group">
                         <label for="foto1">Avatar de perfil:</label>
                         <div class="avatar-container">
-                            <img id="foto1" src="img/avatar1.png" alt="Avatar seleccionado" class="avatar-selected" onclick="toggleAvatarOptions(1)">
-                            <div class="avatar-options" id="avatar-options-1" style="display: none;">
+                            <img id="foto1" src="img/avatar1.png" alt="Avatar seleccionado" class="avatar-selected">
+                            <div class="avatar-options">
                                 <img src="img/avatar1.png" alt="Avatar 1" class="avatar-option" onclick="seleccionarAvatar(1, 1)">
                                 <img src="img/avatar2.png" alt="Avatar 2" class="avatar-option" onclick="seleccionarAvatar(1, 2)">
                                 <img src="img/avatar3.png" alt="Avatar 3" class="avatar-option" onclick="seleccionarAvatar(1, 3)">
@@ -45,13 +45,13 @@
                         </div>
                     </div>
                     
-                    <button type="button" class="btn-primary" onclick="guardarPerfil(1)">☕ Guardar Perfil</button>
+                    <button type="button" class="btn-primary" onclick="guardarPerfil(1)">Guardar Perfil</button>
                 </form>
             </div>
 
             <!-- Perfil Jugador 2 -->
             <div class="profile-form">
-                <h2>🍰 Jugador 2</h2>
+                <h2>Jugador 2</h2>
                 <form id="form-jugador2">
                     <div class="form-group">
                         <label for="nombre2">Nombre:</label>
@@ -71,8 +71,8 @@
                     <div class="form-group">
                         <label for="foto2">Avatar de perfil:</label>
                         <div class="avatar-container">
-                            <img id="foto2" src="img/avatar2.png" alt="Avatar seleccionado" class="avatar-selected" onclick="toggleAvatarOptions(2)">
-                            <div class="avatar-options" id="avatar-options-2" style="display: none;">
+                            <img id="foto2" src="img/avatar2.png" alt="Avatar seleccionado" class="avatar-selected">
+                            <div class="avatar-options">
                                 <img src="img/avatar1.png" alt="Avatar 1" class="avatar-option" onclick="seleccionarAvatar(2, 1)">
                                 <img src="img/avatar2.png" alt="Avatar 2" class="avatar-option" onclick="seleccionarAvatar(2, 2)">
                                 <img src="img/avatar3.png" alt="Avatar 3" class="avatar-option" onclick="seleccionarAvatar(2, 3)">
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     
-                    <button type="button" class="btn-primary" onclick="guardarPerfil(2)">🍰 Guardar Perfil</button>
+                    <button type="button" class="btn-primary" onclick="guardarPerfil(2)">Guardar Perfil</button>
                 </form>
             </div>
         </div>
