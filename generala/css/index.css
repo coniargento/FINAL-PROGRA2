@@ -7,7 +7,12 @@ body {
     -webkit-text-size-adjust: none;
     -webkit-user-select: none;
     user-select: none;
-    background: #2c1810;
+    background: red !important;
+    background-image: url('../img/fondogenerala.png') !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
     height: 100vh;
@@ -23,7 +28,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 0 10px 10px 10px;
     box-sizing: border-box;
     background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #CD853F 100%);
     position: relative;
@@ -37,7 +42,11 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 105, 30, 0.3));
+    background-image: url('../img/fondogenerala.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.8) contrast(1.1);
     z-index: -1;
 }
 
@@ -45,23 +54,28 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
-    color: white;
+    margin: 0 -10px 0 -10px;
+    color: #2c1810;
     position: relative;
     min-height: 60px;
+    background: #f4f1e8;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: calc(100% + 20px);
+    box-sizing: border-box;
 }
 
 .btn-back {
-    background: rgba(255,255,255,0.2);
+    background: linear-gradient(135deg, #8B4513, #D2691E);
     color: white;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid #654321;
     padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .btn-back:hover {
@@ -86,12 +100,14 @@ body {
 }
 
 .score {
-    background: rgba(255,255,255,0.1);
+    background: linear-gradient(135deg, #8B4513, #D2691E);
+    color: white;
     padding: 10px 20px;
     border-radius: 20px;
     font-size: 1.2rem;
     font-weight: bold;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: 2px solid #654321;
 }
 
 /* Estilos específicos para Generala */
@@ -228,82 +244,234 @@ body {
     border-radius: 8px;
 }
 
+/* Anotador estilo hoja de papel debajo del header */
 .scoreboard-section {
-    background: rgba(255,255,255,0.95);
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    flex: 1;
+    position: absolute !important;
+    top: 100px !important;
+    right: 10px !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 500px;
+    height: auto;
+    max-width: 90vw;
+    background: linear-gradient(135deg, #fefefe 0%, #f8f8f8 100%);
+    border: 2px solid #d4d4d4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+    padding: 10px 40px 10px 40px;
+    z-index: 1;
+    font-family: 'Caveat', 'Comic Sans MS', 'Segoe Script', cursive, sans-serif;
+    opacity: 1;
+    overflow: hidden;
+    transform: none !important;
+    margin: 0 !important;
     display: flex;
     flex-direction: column;
+    position: absolute;
+}
+
+.scoreboard-section::before {
+    display: none;
+}
+
+/* Agujeros de perforación */
+.scoreboard-section::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    background-image: 
+        radial-gradient(circle at 8px 15px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 45px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 75px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 105px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 135px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 165px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 195px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 225px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 255px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 285px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 315px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 345px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 375px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 405px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 435px, #c0c0c0 3px, transparent 3px),
+        radial-gradient(circle at 8px 465px, #c0c0c0 3px, transparent 3px);
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .scoreboard-section h3 {
+    color: #2c1810;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-top: 0;
+    font-family: inherit;
     text-align: center;
-    color: #333;
-    margin: 0 0 15px 0;
-    font-size: 1.3rem;
+    letter-spacing: 2px;
+    text-shadow: none;
+    border-bottom: 2px solid #d0d0d0;
+    padding-bottom: 8px;
+    position: relative;
+}
+
+.scoreboard-section h3::after {
+    display: none;
 }
 
 .scoreboard {
     display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 6px;
     flex: 1;
+    justify-content: space-between;
+    margin-top: 0;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Ajuste para que las columnas solo ocupen el espacio de las filas reales */
+.categories-column, .player-column {
+    height: auto !important;
+    min-height: unset !important;
+    max-height: unset !important;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.scoreboard {
+    align-items: flex-start !important;
+}
+
+.categories-column {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 28%;
+    margin-right: 2px;
 }
 
 .player-column {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: unset;
     flex: 1;
-    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 32%;
+    margin: 0 2px;
+}
+
+.categories-column h4 {
+    color: #2c1810;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: none;
+    border: none;
+    margin-bottom: 4px;
+    margin-top: 0;
+    padding: 0;
+    text-align: left;
+    text-shadow: none;
+    font-weight: bold;
+    border-bottom: 1px solid #d0d0d0;
+    padding-bottom: 2px;
+    width: 100%;
 }
 
 .player-column h4 {
+    color: #2c1810;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: none;
+    border: none;
+    margin-bottom: 4px;
+    margin-top: 0;
+    padding: 0;
     text-align: center;
-    color: #333;
-    margin: 0 0 10px 0;
-    font-size: 1.1rem;
-    padding: 8px;
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(210, 105, 30, 0.1));
-    border-radius: 8px;
+    text-shadow: none;
+    font-weight: bold;
+    width: 100%;
+}
+
+.category-row {
+    background: transparent;
+    border: none;
+    color: #2c1810;
+    font-size: 0.78rem;
+    font-family: inherit;
+    border-radius: 0;
+    margin: 1px 0;
+    padding: 3px 2px 3px 0;
+    border-left: none;
+    transition: none;
+    display: flex;
+    justify-content: flex-start;
+    cursor: default;
+    line-height: 1.1;
+    width: 100%;
+    align-items: center;
+    font-weight: bold;
 }
 
 .score-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 10px;
+    background: transparent;
+    border: none;
+    color: #2c1810;
+    font-size: 0.78rem;
+    font-family: inherit;
+    border-radius: 0;
     margin: 1px 0;
-    border-radius: 6px;
+    padding: 3px 2px 3px 10px;
+    border-left: none;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: #333;
-    font-size: 0.9rem;
+    line-height: 1.1;
+    width: 100%;
+    max-width: 90px;
+    align-items: center;
 }
 
 .score-row:hover {
-    background: rgba(139, 69, 19, 0.1);
-    transform: scale(1.02);
-}
-
-.score-row.subtotal {
-    background: rgba(139, 69, 19, 0.2);
-    font-weight: bold;
-    cursor: default;
-}
-
-.score-row.bonus {
-    background: rgba(210, 105, 30, 0.2);
-    font-weight: bold;
-    cursor: default;
+    background: rgba(240, 240, 240, 0.5);
+    border-radius: 4px;
 }
 
 .score-row.total {
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 105, 30, 0.3));
+    background: transparent;
+    color: #2c1810;
     font-weight: bold;
-    font-size: 1.1rem;
-    cursor: default;
+    border-left: none;
+    font-size: 0.85rem;
+    margin-top: 6px;
+    padding: 6px 2px 6px 10px;
+    border-top: 1px solid #d0d0d0;
+    border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.total-scores {
+    display: flex;
+    gap: 18px;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .game-info {
@@ -313,6 +481,146 @@ body {
     margin-top: 10px;
     flex-wrap: wrap;
 }
+
+.header-row {
+    color: #2c1810;
+    font-size: 1rem;
+    font-family: inherit;
+    background: none;
+    border: none;
+    margin-bottom: 4px;
+    margin-top: 0;
+    padding: 0 0 4px 0;
+    text-align: center;
+    text-shadow: none;
+    font-weight: bold;
+    border-bottom: 1px solid #d0d0d0;
+    width: 100%;
+}
+
+.categories-column .header-row {
+    text-align: left;
+    padding-left: 0;
+}
+
+.player-column .header-row {
+    text-align: center;
+}
+
+.scoreboard-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 0;
+    width: 100%;
+}
+
+.header-row {
+    color: #2c1810;
+    font-size: 1rem;
+    font-family: inherit;
+    background: none;
+    border: none;
+    padding: 0 0 4px 0;
+    text-align: center;
+    text-shadow: none;
+    font-weight: bold;
+    border-bottom: 1px solid #d0d0d0;
+    width: 100%;
+    grid-column: span 1;
+}
+
+.scoreboard-grid .header-row:first-child {
+    text-align: left;
+}
+
+.category-row {
+    color: #2c1810;
+    font-size: 0.85rem;
+    font-family: inherit;
+    font-weight: bold;
+    padding: 3px 2px 3px 0;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    position: relative;
+}
+
+.category-row:last-child {
+    border-top: 2px solid #d0d0d0;
+    margin-top: 6px;
+    padding-top: 8px;
+    grid-column: 1 / span 3;
+    position: relative;
+}
+
+.category-row:last-child::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -10px;
+    right: -10px;
+    height: 2px;
+    background: #d0d0d0;
+    z-index: 1;
+}
+
+.score-row {
+    color: #2c1810;
+    font-size: 0.85rem;
+    font-family: inherit;
+    padding: 3px 2px 3px 10px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.total-row {
+    grid-column: 1 / span 3;
+    background: transparent;
+    color: #2c1810;
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    padding: 8px 0 8px 0;
+    border-top: 2px solid #d0d0d0;
+    border-bottom: none;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    align-items: center;
+    position: relative;
+}
+
+.total-row::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -10px;
+    right: -10px;
+    height: 2px;
+    background: #d0d0d0;
+    z-index: 1;
+}
+
+.total-row span:first-child {
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.total-row span:nth-child(2) {
+    text-align: center;
+}
+
+.total-row span:nth-child(3) {
+    text-align: center;
+}
+
+
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -374,5 +682,17 @@ body {
     
     .scoreboard-section {
         height: auto;
+    }
+}
+
+@media (max-width: 900px) {
+    .scoreboard-section {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 90vw;
+        max-width: 90vw;
+        margin: 0;
+        z-index: 9999;
     }
 }
