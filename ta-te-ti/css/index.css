@@ -412,16 +412,17 @@ button, .btn-primary, .btn-secondary {
     z-index: 1000;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0,0,0,0.7);
     backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeIn 0.3s ease;
+    /* Sin animación ni transición */
+    transition: none !important;
 }
-
+.modal.nodisp { display: none !important; }
 .modal-content {
     background: rgba(255,255,255,0.95);
     border-radius: 25px;
@@ -432,8 +433,16 @@ button, .btn-primary, .btn-secondary {
     border: 1px solid rgba(255,255,255,0.2);
     position: relative;
     overflow: hidden;
-    max-width: 90%;
-    animation: slideIn 0.3s ease;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    /* Sin animación ni transición */
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
 }
 
 .modal-content::before {
@@ -444,7 +453,7 @@ button, .btn-primary, .btn-secondary {
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg, transparent 30%, rgba(139, 69, 19, 0.1) 50%, transparent 70%);
-    animation: borderFlow 2s linear infinite;
+    /* Sin animación */
     pointer-events: none;
 }
 
@@ -501,22 +510,6 @@ button, .btn-primary, .btn-secondary {
 .modal-buttons .btn-secondary:hover {
     background: linear-gradient(135deg, #A0522D, #CD853F) !important;
     color: white !important;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { 
-        opacity: 0;
-        transform: scale(0.8) translateY(-50px);
-    }
-    to { 
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
 }
 
 /* Responsive */

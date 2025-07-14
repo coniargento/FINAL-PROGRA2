@@ -195,21 +195,11 @@ function crearConfeti() {
 }
 
 function mostrarReglas() {
-    const reglas = `
-☕ REGLAS DEL TA-TE-TI
+    const reglas = `☕ REGLAS DEL TA-TE-TI\n\n🎮 CÓMO JUGAR:\n• El jugador ☕ (Café) va primero\n• El jugador 🍰 (Pastel) va segundo\n• Haz clic en cualquier casilla vacía para colocar tu ficha\n• El objetivo es alinear 3 fichas en línea (horizontal, vertical o diagonal)\n\n🏆 GANADOR:\n• El primer jugador en alinear 3 fichas gana\n• Si todas las casillas están llenas sin ganador, es empate\n\n☕ ¡Disfruta tu café mientras juegas!`;
+    document.getElementById('texto-reglas').textContent = reglas;
+    document.getElementById('modal-reglas').classList.remove('nodisp');
+}
 
-🎮 CÓMO JUGAR:
-• El jugador ☕ (Café) va primero
-• El jugador 🍰 (Pastel) va segundo
-• Haz clic en cualquier casilla vacía para colocar tu ficha
-• El objetivo es alinear 3 fichas en línea (horizontal, vertical o diagonal)
-
-🏆 GANADOR:
-• El primer jugador en alinear 3 fichas gana
-• Si todas las casillas están llenas sin ganador, es empate
-
-☕ ¡Disfruta tu café mientras juegas!
-    `;
-    
-    alert(reglas);
+function cerrarModalReglas() {
+    document.getElementById('modal-reglas').classList.add('nodisp');
 }

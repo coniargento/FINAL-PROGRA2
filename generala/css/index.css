@@ -722,6 +722,44 @@ button, .btn-primary, .btn-secondary {
   gap: 10px;
 }
 
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Sin animación ni transición */
+    transition: none !important;
+}
+.modal.nodisp { display: none !important; }
+.modal-content {
+    background: rgba(255,255,255,0.95);
+    border-radius: 25px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    position: relative;
+    overflow: hidden;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    /* Sin animación ni transición */
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
