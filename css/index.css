@@ -197,36 +197,24 @@ button, .btn-primary, .btn-secondary {
 
 /* Fondos específicos para cada juego */
 .tateti-bg {
-    background-image: 
-        radial-gradient(circle at 30% 30%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 70% 70%, rgba(210, 105, 30, 0.3) 0%, transparent 50%),
-        linear-gradient(45deg, 
-            rgba(139, 69, 19, 0.2) 0%, 
-            rgba(210, 105, 30, 0.2) 25%, 
-            rgba(205, 133, 63, 0.2) 50%, 
-            rgba(139, 69, 19, 0.2) 75%, 
-            rgba(210, 105, 30, 0.2) 100%);
+    background-image: url('../img/preview-tateti.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px) brightness(0.2) !important;
 }
 
 .generala-bg {
-    background-image: 
-        radial-gradient(circle at 20% 20%, rgba(139, 69, 19, 0.4) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(210, 105, 30, 0.4) 0%, transparent 40%),
-        linear-gradient(135deg, 
-            rgba(139, 69, 19, 0.3) 0%, 
-            rgba(210, 105, 30, 0.3) 33%, 
-            rgba(205, 133, 63, 0.3) 66%, 
-            rgba(139, 69, 19, 0.3) 100%);
+    background-image: url('../img/preview-generala.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px) brightness(0.2) !important;
 }
 
 .snake-bg {
-    background-image: 
-        radial-gradient(circle at 40% 40%, rgba(34, 139, 34, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 60% 60%, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
-        linear-gradient(90deg, 
-            rgba(34, 139, 34, 0.2) 0%, 
-            rgba(139, 69, 19, 0.2) 50%, 
-            rgba(210, 105, 30, 0.2) 100%);
+    background-image: url('../img/preview-serpiente.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px) brightness(0.2) !important;
 }
 
 /* Estilos de previsualización eliminados - ahora usamos fondos visuales */
