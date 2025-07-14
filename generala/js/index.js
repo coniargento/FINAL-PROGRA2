@@ -27,16 +27,14 @@ function cargarPerfiles() {
     if (perfiles && perfiles.length >= 2) {
         document.getElementById('jugador1-nombre').textContent = perfiles[0].nombre;
         document.getElementById('jugador2-nombre').textContent = perfiles[1].nombre;
-        document.getElementById('turno-jugador').textContent = perfiles[0].nombre;
     }
 }
 
 function inicializarJuego() {
     tiroActual = 1;
-    actualizarDados();
+    ocultarDados();
     actualizarControles();
-    // No tirar dados automáticamente
-    // tirarDados(); // Eliminar esta línea
+    actualizarTurnoVisual();
     actualizarTablero();
 }
 
@@ -44,15 +42,44 @@ function inicializarJuego() {
 function tirarDados() {
     if (tiroActual > 3) return;
     
+    // Generar nuevos valores para los dados
     for (let i = 0; i < 5; i++) {
         if (!dadosBloqueados[i]) {
             dados[i] = Math.floor(Math.random() * 6) + 1;
         }
     }
     
+    // Mostrar dados con animación
+    mostrarDadosConAnimacion();
+    
     tiroActual++;
-    actualizarDados();
     actualizarControles();
+}
+
+// Mostrar dados con animación
+function mostrarDadosConAnimacion() {
+    const dadosElements = document.querySelectorAll('.dice');
+    
+    dadosElements.forEach((dado, index) => {
+        // Remover clases anteriores
+        dado.classList.remove('visible', 'bloqueado');
+        
+        // Actualizar el número del dado
+        dado.textContent = dados[index];
+        
+        // Aplicar clase de bloqueado si corresponde
+        if (dadosBloqueados[index]) {
+            dado.classList.add('bloqueado');
+        }
+        
+        // Mostrar con animación con delay escalonado
+        setTimeout(() => {
+            dado.classList.add('visible');
+        }, index * 150); // Cada dado aparece 150ms después que el anterior
+    });
+    
+    // Actualizar el contador de tiros
+    document.getElementById('tiro-actual').textContent = tiroActual;
 }
 
 // Actualizar visualización de dados
@@ -69,7 +96,13 @@ function actualizarDados() {
 function toggleDado(index) {
     if (tiroActual > 1) {
         dadosBloqueados[index] = !dadosBloqueados[index];
-        actualizarDados();
+        
+        const dado = document.getElementById(`dado${index + 1}`);
+        dado.classList.remove('bloqueado');
+        
+        if (dadosBloqueados[index]) {
+            dado.classList.add('bloqueado');
+        }
     }
 }
 
@@ -180,21 +213,37 @@ function cambiarTurno() {
     dadosBloqueados = [false, false, false, false, false];
     tiroActual = 1;
     
-    // Actualizar interfaz
-    actualizarDados();
-    actualizarControles();
+    // Ocultar dados
+    ocultarDados();
     
-    // Actualizar nombre del jugador
-    const perfiles = Storage.cargar("perfiles");
-    if (perfiles && perfiles.length >= 2) {
-        document.getElementById('turno-jugador').textContent = perfiles[jugadorActual].nombre;
-    } else {
-        document.getElementById('turno-jugador').textContent = `Cliente ${jugadorActual + 1}`;
-    }
+    // Actualizar interfaz
+    actualizarControles();
+    actualizarTurnoVisual();
     
     // Verificar si el juego terminó
     if (juegoTerminado()) {
         finalizarJuego();
+    }
+}
+
+// Ocultar dados
+function ocultarDados() {
+    const dadosElements = document.querySelectorAll('.dice');
+    dadosElements.forEach(dado => {
+        dado.classList.remove('visible', 'bloqueado');
+    });
+}
+
+// Actualizar visualización del turno
+function actualizarTurnoVisual() {
+    // Remover clase de turno actual de todos los headers
+    const headers = document.querySelectorAll('.header-row');
+    headers.forEach(header => header.classList.remove('turno-actual'));
+    
+    // Agregar clase al jugador actual
+    const jugadorActualHeader = document.getElementById(`jugador${jugadorActual + 1}-nombre`);
+    if (jugadorActualHeader) {
+        jugadorActualHeader.classList.add('turno-actual');
     }
 }
 
@@ -302,16 +351,10 @@ function nuevoJuego() {
         };
         
         // Actualizar interfaz
-        actualizarDados();
+        ocultarDados();
         actualizarControles();
+        actualizarTurnoVisual();
         actualizarTablero();
-        
-        const perfiles = Storage.cargar("perfiles");
-        if (perfiles && perfiles.length >= 2) {
-            document.getElementById('turno-jugador').textContent = perfiles[0].nombre;
-        } else {
-            document.getElementById('turno-jugador').textContent = 'Cliente 1';
-        }
     }
 }
 

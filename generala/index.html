@@ -9,9 +9,14 @@
 <body>
     <div class="game-container">
         <header class="game-header">
-            <button class="btn-back" onclick="volverAlMenu()">← Volver</button>
+            <div class="header-buttons">
+                <button class="btn-back" onclick="volverAlMenu()">←</button>
+            </div>
             <img src="../img/generala.png" alt="Generala Logo" class="game-logo">
-            <div class="score">Turno: <span id="turno-jugador">Cliente 1</span></div>
+            <div class="header-buttons">
+                <button class="btn-primary" onclick="nuevoJuego()">Nuevo Juego</button>
+                <button class="btn-primary" onclick="mostrarReglas()">Reglas</button>
+            </div>
         </header>
 
         <!-- Tablero de puntuación debajo del header -->
@@ -73,9 +78,10 @@
             </div>
         </div>
 
-        <div class="generala-game">
-            <div class="dice-section">
-                <h3>🎲 Dados</h3>
+        <!-- Taza de dados en la esquina inferior izquierda -->
+        <div class="dice-cup">
+            <div class="cup-container">
+                <img src="../img/taza-cafe.png" alt="Taza de café" class="cup-image">
                 <div class="dice-container">
                     <div class="dice" id="dado1" onclick="toggleDado(0)">1</div>
                     <div class="dice" id="dado2" onclick="toggleDado(1)">1</div>
@@ -83,8 +89,10 @@
                     <div class="dice" id="dado4" onclick="toggleDado(3)">1</div>
                     <div class="dice" id="dado5" onclick="toggleDado(4)">1</div>
                 </div>
+            </div>
+            <div class="dice-controls-fixed">
                 <div class="dice-controls">
-                    <button class="btn-primary" onclick="tirarDados()" id="btn-tirar">🎲 Tirar Dados</button>
+                    <button class="btn-primary" onclick="tirarDados()" id="btn-tirar">Tirar Dados</button>
                 </div>
                 <div class="tiros-info">
                     <p>Tiro: <span id="tiro-actual">1</span>/3</p>
@@ -92,10 +100,7 @@
             </div>
         </div>
 
-        <div class="game-info">
-            <button class="btn-primary" onclick="nuevoJuego()">🔄 Nuevo Juego</button>
-            <button class="btn-secondary" onclick="mostrarReglas()">📖 Reglas</button>
-        </div>
+
     </div>
 
     <script src="../js/lib.js"></script>
