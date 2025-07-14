@@ -204,6 +204,11 @@ function anotarPuntuacion() {
     }
 }
 
+// Añadir función para actualizar el texto de tiros
+function actualizarTirosInfo() {
+    document.getElementById('tiro-actual').textContent = tiroActual;
+}
+
 // Cambiar turno
 function cambiarTurno() {
     jugadorActual = jugadorActual === 0 ? 1 : 0;
@@ -219,6 +224,7 @@ function cambiarTurno() {
     // Actualizar interfaz
     actualizarControles();
     actualizarTurnoVisual();
+    actualizarTirosInfo();
     
     // Verificar si el juego terminó
     if (juegoTerminado()) {
@@ -355,6 +361,7 @@ function nuevoJuego() {
         actualizarControles();
         actualizarTurnoVisual();
         actualizarTablero();
+        actualizarTirosInfo();
     }
 }
 
