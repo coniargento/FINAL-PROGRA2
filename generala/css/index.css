@@ -734,7 +734,6 @@ button, .btn-primary, .btn-secondary {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Sin animación ni transición */
     transition: none !important;
 }
 .modal.nodisp { display: none !important; }
@@ -754,10 +753,87 @@ button, .btn-primary, .btn-secondary {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    /* Sin animación ni transición */
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
+}
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(139, 69, 19, 0.1) 50%, transparent 70%);
+    pointer-events: none;
+}
+.modal-content h2 {
+    font-size: 2.5rem;
+    color: #333;
+    margin: 0 0 20px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+.modal-content .mensaje {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 25px 0;
+    color: #333;
+    padding: 15px;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(210, 105, 30, 0.1));
+    border-radius: 15px;
+    border: 1px solid rgba(139, 69, 19, 0.2);
+}
+.modal-buttons {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+.modal-buttons .btn-primary {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 48px !important;
+    line-height: 1 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    width: 160px !important;
+    min-width: 0 !important;
+    max-width: 160px !important;
+    font-size: 1rem !important;
+    border-radius: 20px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    font-weight: 600 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    background: linear-gradient(135deg, #8B4513, #D2691E) !important;
+    color: white !important;
+    border: 2px solid #654321 !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+.modal-buttons .btn-primary:hover {
+    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
+    color: white !important;
+}
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+    .modal-content .mensaje {
+        font-size: 1.2rem;
+    }
+    .modal-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 

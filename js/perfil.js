@@ -27,6 +27,13 @@ function cargarPerfiles() {
 }
 
 function guardarPerfil(numeroJugador) {
+    // Asegurar que el array tenga dos elementos
+    if (perfiles.length < cantJugadores) {
+        for (let i = 0; i < cantJugadores; i++) {
+            if (!perfiles[i]) perfiles[i] = {};
+        }
+    }
+
     // Reseteo el estado de validación del formulario
     const campos = ["nombre", "apodo", "cafe", "foto"];
     campos.forEach(campo => {

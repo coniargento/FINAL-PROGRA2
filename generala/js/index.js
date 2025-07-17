@@ -171,16 +171,14 @@ function esDobleGenerala(conteo) {
 // Seleccionar categoría para anotar
 function seleccionarCategoria(categoria, jugador) {
     if (jugador !== jugadorActual || tiroActual <= 1) return;
-    
     const jugadorKey = jugador === 0 ? 'p1' : 'p2';
+    // Nueva validación: si ya hay puntuación en esa casilla, no hacer nada
+    if (puntuaciones[jugadorKey][categoria] !== null) return;
     const puntuacion = calcularPuntuacion(categoria);
-    
     // Anotar puntuación
     puntuaciones[jugadorKey][categoria] = puntuacion;
-    
     // Actualizar tablero
     actualizarTablero();
-    
     // Cambiar turno
     cambiarTurno();
 }
@@ -269,7 +267,6 @@ function juegoTerminado() {
 function finalizarJuego() {
     const ganador = puntuaciones.p1.total > puntuaciones.p2.total ? 1 : 
                    puntuaciones.p2.total > puntuaciones.p1.total ? 2 : 0;
-    
     let mensaje = '';
     if (ganador === 0) {
         mensaje = '¡Empate!';
@@ -278,10 +275,9 @@ function finalizarJuego() {
         const nombreGanador = perfiles && perfiles[ganador - 1] ? perfiles[ganador - 1].nombre : `Cliente ${ganador}`;
         mensaje = `¡${nombreGanador} gana con ${puntuaciones[ganador === 1 ? 'p1' : 'p2'].total} puntos!`;
     }
-    
-    setTimeout(() => {
-        alert(`🎉 Juego terminado!\n\n${mensaje}\n\nP1: ${puntuaciones.p1.total} puntos\nP2: ${puntuaciones.p2.total} puntos`);
-    }, 500);
+    // Mostrar mensaje en el modal
+    document.querySelector('#game-over-modal .mensaje').innerHTML = `<br>${mensaje}<br><br>P1: ${puntuaciones.p1.total} puntos<br>P2: ${puntuaciones.p2.total} puntos`;
+    document.getElementById('game-over-modal').classList.remove('nodisp');
 }
 
 // Actualizar tablero

@@ -200,21 +200,21 @@ button, .btn-primary, .btn-secondary {
     background-image: url('../img/preview-tateti.png');
     background-size: cover;
     background-position: center;
-    filter: blur(8px) brightness(0.2) !important;
+    filter: blur(6px) brightness(0.4) !important;
 }
 
 .generala-bg {
     background-image: url('../img/preview-generala.png');
     background-size: cover;
     background-position: center;
-    filter: blur(8px) brightness(0.2) !important;
+    filter: blur(6px) brightness(0.4) !important;
 }
 
 .snake-bg {
     background-image: url('../img/preview-serpiente.png');
     background-size: cover;
     background-position: center;
-    filter: blur(6px) brightness(0.2) !important;
+    filter: blur(6px) brightness(0.4) !important;
 }
 
 /* Estilos de previsualización eliminados - ahora usamos fondos visuales */
