@@ -142,8 +142,6 @@ function getAvatarIndex(numeroJugador) {
     return match ? parseInt(match[1]) : 1;
 }
 
-
-
 function mostrarMensaje(mensaje, tipo = "success") {
     // Crear elemento de mensaje
     const mensajeElement = document.createElement('div');

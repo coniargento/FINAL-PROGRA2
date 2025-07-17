@@ -28,10 +28,6 @@ function cargarPerfiles() {
     }
 }
 
-
-
-
-
 function empezarJuego() {
     juego = {
         tabla : [["&nbsp;", "&nbsp;", "&nbsp;"], ["&nbsp;", "&nbsp;", "&nbsp;"], ["&nbsp;", "&nbsp;", "&nbsp;"]],
