@@ -12,6 +12,7 @@ function cargarPerfiles() {
         document.getElementById("nombre1").value = perfiles[0].nombre || "";
         document.getElementById("apodo1").value = perfiles[0].apodo || "";
         document.getElementById("color1").value = perfiles[0].color || "#8B4513";
+        document.getElementById("cafe1").value = perfiles[0].cafe || "espresso";
         document.getElementById("foto1").setAttribute("src", perfiles[0].foto || "img/avatar1.png");
         actualizarAvatarSeleccionado(1, perfiles[0].avatarIndex || 1);
     }
@@ -21,6 +22,7 @@ function cargarPerfiles() {
         document.getElementById("nombre2").value = perfiles[1].nombre || "";
         document.getElementById("apodo2").value = perfiles[1].apodo || "";
         document.getElementById("color2").value = perfiles[1].color || "#D2691E";
+        document.getElementById("cafe2").value = perfiles[1].cafe || "espresso";
         document.getElementById("foto2").setAttribute("src", perfiles[1].foto || "img/avatar2.png");
         actualizarAvatarSeleccionado(2, perfiles[1].avatarIndex || 2);
     }
@@ -49,6 +51,7 @@ function guardarPerfil(numeroJugador) {
             nombre: document.getElementById("nombre" + numeroJugador).value,
             apodo: document.getElementById("apodo" + numeroJugador).value,
             cafe: document.getElementById("cafe" + numeroJugador).value,
+            color: document.getElementById("color" + numeroJugador).value,
             foto: document.getElementById("foto" + numeroJugador).getAttribute("src"),
             avatarIndex: getAvatarIndex(numeroJugador)
         };
@@ -61,12 +64,10 @@ function guardarPerfil(numeroJugador) {
 }
 
 function validarForm(numeroJugador) {
-    const campos = ["nombre", "apodo", "cafe"];
-
+    const campos = ["nombre", "apodo"];
     for (const campo of campos) {
         const elemento = document.getElementById(campo + numeroJugador);
         const valor = elemento.value;
-
         if (!valor || valor.length < 3) {
             elemento.classList.add("notValid");
             elemento.focus();
@@ -76,9 +77,17 @@ function validarForm(numeroJugador) {
             elemento.classList.remove("notValid");
         }
     }
-
+    // Validar café (select)
+    const cafe = document.getElementById("cafe" + numeroJugador);
+    if (!cafe.value || cafe.value === "" || cafe.selectedIndex === -1) {
+        cafe.classList.add("notValid");
+        cafe.focus();
+        mostrarMensaje("Debes seleccionar un café favorito", "error");
+        return false;
+    } else {
+        cafe.classList.remove("notValid");
+    }
     const img = document.getElementById("foto" + numeroJugador);
-
     if (!img.getAttribute("src") || img.getAttribute("src").includes("data:image/svg+xml")) {
         img.classList.add("notValid");
         mostrarMensaje("Debes seleccionar un avatar de perfil", "error");
@@ -86,7 +95,6 @@ function validarForm(numeroJugador) {
     } else {
         img.classList.remove("notValid");
     }
-
     return true;
 }
 
